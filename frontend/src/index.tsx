@@ -7,14 +7,24 @@ import './style.css'
 
 export function App() {
   return (
-    <LocationProvider>
-      <main>
-        <Router>
-          <Route path="/" component={Home} />
-          <Route default component={NotFound} />
-        </Router>
-      </main>
-    </LocationProvider>
+    <div id="root">
+      <div id="header">
+        <img src="https://placeholder.com/200x200" className="icon" />
+        <span className="title">
+          Procchi
+        </span>
+      </div>
+
+      <LocationProvider>
+        <main>
+          <Router>
+            <Route path="/" component={Home} />
+            <Route default component={NotFound} />
+          </Router>
+        </main>
+      </LocationProvider>
+    </div>
+
   )
 }
 

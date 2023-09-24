@@ -68,24 +68,40 @@ struct Args {
   cpu_history_max: String,
 
   /// Rate (in seconds) at which to update the resource monitor
-  #[arg(short, long, default_value = "5")]
+  #[arg(short = 'r', long, default_value = "5")]
   update_rate: u64,
+
+  /// Username to use for authentication
+  #[arg(short, long)]
+  username: Option<String>,
+
+  /// Password to use for authentication. Not reccommended, use the prompt instead
+  #[arg(short = 'k', long)]
+  password: Option<String>,
 }
 
 fn main() {
-  let args = Args::parse();
-
-  // Prompt for username
-  print!("Username to use while authenticating: ");
-  std::io::stdout().flush().unwrap();
-
+  let mut args = Args::parse();
   let mut username = String::new();
-  std::io::stdin().read_line(&mut username).unwrap();
+  let pwd;
 
-  // Prompt for password
-  print!("Password to use while authenticating: ");
-  std::io::stdout().flush().unwrap();
-  let pwd = sha2::Sha256::digest(read_password().unwrap().as_bytes()).to_vec();
+  if args.username.is_none() || args.password.is_none() {
+    // Prompt for username
+    print!("Username to use while authenticating: ");
+    std::io::stdout().flush().unwrap();
+    std::io::stdin().read_line(&mut username).unwrap();
+
+    // Prompt for password
+    print!("Password to use while authenticating: ");
+    std::io::stdout().flush().unwrap();
+    pwd = sha2::Sha256::digest(read_password().unwrap().as_bytes()).to_vec();
+  } else {
+    username = args.username.unwrap();
+    pwd = sha2::Sha256::digest(args.password.unwrap().as_bytes()).to_vec();
+
+    // Remove the password from memory
+    args.password = None;
+  }
 
   // Create a new stat with the username and hashed password
   let state = State::new(username.trim().to_string(), pwd);
