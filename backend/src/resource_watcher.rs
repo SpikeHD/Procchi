@@ -1,4 +1,4 @@
-use std::sync::{Arc, Mutex, MutexGuard};
+use std::sync::{Arc, Mutex};
 use serde::Serialize;
 use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt};
 

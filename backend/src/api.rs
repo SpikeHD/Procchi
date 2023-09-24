@@ -1,7 +1,7 @@
 use sysinfo::{SystemExt, System, CpuExt};
 use serde::Serialize;
 
-use crate::resource_watcher::ResourceWatcher;
+use crate::{resource_watcher::ResourceWatcher, State};
 
 pub struct ApiSettings {
   pub mem_history_max: u64,
@@ -28,7 +28,7 @@ pub struct SystemInfo {
 static mut RESOURCE_WATCHER: Option<ResourceWatcher> = None;
 static mut SYSTEM_INFO: Option<SystemInfo> = None;
 
-pub fn register_routes(app: &mut tide::Server<()>, settings: ApiSettings) {
+pub fn register_routes(app: &mut tide::Server<State>, settings: ApiSettings) {
   unsafe {
     RESOURCE_WATCHER = Some(ResourceWatcher::new(settings));
     RESOURCE_WATCHER.as_ref().unwrap().start();
@@ -61,7 +61,7 @@ pub fn fetch_system_info() {
   }
 }
 
-pub async fn processes(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
+pub async fn processes(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
   let watcher = unsafe { RESOURCE_WATCHER.as_ref().unwrap() };
   let mut res = tide::Response::new(200);
 
@@ -71,7 +71,7 @@ pub async fn processes(_req: tide::Request<()>) -> Result<tide::Response, tide::
   Ok(res)
 }
 
-pub async fn memory(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
+pub async fn memory(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
   let watcher = unsafe { RESOURCE_WATCHER.as_ref().unwrap() };
   let mut res = tide::Response::new(200);
 
@@ -81,7 +81,7 @@ pub async fn memory(_req: tide::Request<()>) -> Result<tide::Response, tide::Err
   Ok(res)
 }
 
-pub async fn swap(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
+pub async fn swap(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
   let watcher = unsafe { RESOURCE_WATCHER.as_ref().unwrap() };
   let mut res = tide::Response::new(200);
 
@@ -91,7 +91,7 @@ pub async fn swap(_req: tide::Request<()>) -> Result<tide::Response, tide::Error
   Ok(res)
 }
 
-pub async fn cpu(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
+pub async fn cpu(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
   let watcher = unsafe { RESOURCE_WATCHER.as_ref().unwrap() };
   let mut res = tide::Response::new(200);
 
@@ -101,7 +101,7 @@ pub async fn cpu(_req: tide::Request<()>) -> Result<tide::Response, tide::Error>
   Ok(res)
 }
 
-pub async fn sysinfo(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
+pub async fn sysinfo(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
   unsafe {
     if SYSTEM_INFO.is_none() {
       fetch_system_info();
