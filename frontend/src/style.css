@@ -2,7 +2,7 @@
   --background: #fbfefb;
   --text-primary: var(--background);
   --text-secondary: #092207;
-  --color-primary: #9eeb99;
+  --color-primary: #824f92;
   --color-secondary: #efc3ef;
   --color-accent: #c832c8;
 }
@@ -12,8 +12,14 @@ body {
   padding: 0;
   background: var(--background);
   color: var(--text-secondary);
+
+  font-family: 'Montserrat', sans-serif;
+
+  width: 100vw;
+  height: 100vh;
 }
 
+main,
 #root {
   height: 100%;
   width: 100%;

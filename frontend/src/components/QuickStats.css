@@ -1,0 +1,31 @@
+.quick-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center; 
+
+  width: 80%;
+  height: 120px;
+
+  margin: 24px;
+
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-big {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.stat-small {
+  font-size: 16px;
+  font-weight: normal;
+}
