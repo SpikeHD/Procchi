@@ -1,0 +1,14 @@
+:root {
+  --background: #fbfefb;
+  --text-primary: var(--background);
+  --text-secondary: #092207;
+  --color-primary: #9eeb99;
+  --color-secondary: #efc3ef;
+  --color-accent: #c832c8;
+}
+
+.title {
+  font-family: 'Dela Gothic One', cursive;
+  font-size: 28px;
+  color: var(--text-secondary);
+}

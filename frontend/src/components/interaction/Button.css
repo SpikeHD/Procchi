@@ -1,0 +1,10 @@
+.Button {
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  padding: 4px;
+}
+
+.Button .secondary {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+}
