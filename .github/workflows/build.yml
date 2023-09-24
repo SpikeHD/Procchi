@@ -33,6 +33,11 @@ jobs:
         with:
           bun-version: latest
 
+      - uses: actions/setup-node@v1
+        if: matrix.platform == 'windows-latest'
+        with:
+          node-version: '20.x'
+
       - uses: actions/checkout@v2
 
       - name: Install dependencies
@@ -49,7 +54,7 @@ jobs:
 
       - name: Build
         if: matrix.platform == 'windows-latest'
-        run: npm run build
+        run: cd ./frontend && npm run build && cd ../backend && cargo build --release
 
       - name: Upload
         uses: actions/upload-artifact@v2
