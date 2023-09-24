@@ -44,7 +44,7 @@ jobs:
         if: matrix.platform != 'windows-latest'
         run: cd frontend && bun install
 
-      - name: Install dependencies
+      - name: Install dependencies (Windows)
         if: matrix.platform == 'windows-latest'
         run: cd frontend && npm install
 
@@ -52,12 +52,20 @@ jobs:
         if: matrix.platform != 'windows-latest'
         run: bun run build
 
-      - name: Build
+      - name: Build (Windows)
         if: matrix.platform == 'windows-latest'
         run: cd ./frontend && npm run build && cd ../backend && cargo build --release
 
       - name: Upload
         uses: actions/upload-artifact@v2
+        if: matrix.platform != 'windows-latest'
         with:
           name: procchi
           path: backend/target/release/procchi
+
+      - name: Upload (Windows)
+        uses: actions/upload-artifact@v2
+        if: matrix.platform == 'windows-latest'
+        with:
+          name: procchi
+          path: backend/target/release/procchi.exe
