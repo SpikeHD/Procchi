@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 use serde::Serialize;
-use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt};
+use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt, DiskExt};
 
 use crate::api::ApiSettings;
 
@@ -27,12 +27,20 @@ pub struct Process {
   mem: u64,
 }
 
+#[derive(Clone, Serialize)]
+pub struct Disk {
+  name: String,
+  total: u64,
+  used: u64,
+}
+
 #[derive(Clone)]
 pub struct ResourceWatcher {
   update_rate: u64,
   pub mem_history: Arc<Mutex<Vec<Memory>>>,
   pub swap_history: Arc<Mutex<Vec<Memory>>>,
   pub cpu_history: Arc<Mutex<Vec<CPU>>>,
+  pub disks: Arc<Mutex<Vec<Disk>>>,
   pub mem_history_max: usize,
   pub cpu_history_max: usize,
   pub process_list: Arc<Mutex<Vec<Process>>>,
@@ -46,6 +54,7 @@ impl ResourceWatcher {
       mem_history: Arc::new(Mutex::new(Vec::new())),
       swap_history: Arc::new(Mutex::new(Vec::new())),
       cpu_history: Arc::new(Mutex::new(Vec::new())),
+      disks: Arc::new(Mutex::new(Vec::new())),
       mem_history_max: settings.mem_history_max as usize,
       cpu_history_max: settings.cpu_history_max as usize,
       process_list: Arc::new(Mutex::new(Vec::new())),
@@ -70,6 +79,7 @@ impl ResourceWatcher {
     let mut mem_history = self.mem_history.as_ref().lock().unwrap();
     let mut swap_history = self.swap_history.as_ref().lock().unwrap();
     let mut cpu_history = self.cpu_history.as_ref().lock().unwrap();
+    let mut disks = self.disks.as_ref().lock().unwrap();
     let mut process_list = self.process_list.as_ref().lock().unwrap();
 
     system.refresh_cpu();
@@ -120,6 +130,17 @@ impl ResourceWatcher {
 
     if cpu_history.len() > self.cpu_history_max {
       cpu_history.remove(0);
+    }
+
+    // Clear the old disk list
+    disks.clear();
+
+    for disk in system.disks() {
+      disks.push(Disk {
+        name: format!("{:?}", disk.name()),
+        total: disk.total_space(),
+        used: disk.total_space() - disk.available_space(),
+      });
     }
 
     // Clear the old process list

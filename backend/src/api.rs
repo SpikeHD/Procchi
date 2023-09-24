@@ -37,6 +37,7 @@ pub fn register_routes(app: &mut tide::Server<State>, settings: ApiSettings) {
   app.at("/api/memory").get(memory);
   app.at("/api/swap").get(swap);
   app.at("/api/cpu").get(cpu);
+  app.at("/api/disk").get(disk);
   app.at("/api/processes").get(processes);
   app.at("/api/sysinfo").get(sysinfo);
 }
@@ -96,6 +97,16 @@ pub async fn cpu(_req: tide::Request<State>) -> Result<tide::Response, tide::Err
   let mut res = tide::Response::new(200);
 
   res.set_body(serde_json::to_vec(&watcher.cpu_history).unwrap());
+  res.set_content_type("application/json");
+
+  Ok(res)
+}
+
+pub async fn disk(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
+  let watcher = unsafe { RESOURCE_WATCHER.as_ref().unwrap() };
+  let mut res = tide::Response::new(200);
+
+  res.set_body(serde_json::to_vec(&watcher.disks).unwrap());
   res.set_content_type("application/json");
 
   Ok(res)

@@ -10,6 +10,12 @@ interface CPU {
   used: number; // This is a percentage
 }
 
+interface Disk {
+  name: string,
+  total: number,
+  used: number,
+}
+
 interface Process {
   name: string;
   pid: number;

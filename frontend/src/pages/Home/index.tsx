@@ -8,10 +8,8 @@ export function Home() {
   const [memoryData, setMemoryData] = useState([] as Memory[])
   const [swapData, setSwapData] = useState([] as Memory[])
   const [cpuData, setCpuData] = useState([] as CPU[])
+  const [diskData, setDiskData] = useState([] as Disk[])
   const [processList, setProcessList] = useState([] as Process[])
-  
-  // TODO: Unused for now
-  // const [diskData, setDiskData] = useState([])
 
   useEffect(() => {
     async function grabLatestData() {
@@ -26,6 +24,10 @@ export function Home() {
       const cres = await fetch('/api/cpu')
       const cdata = await cres.json()
       setCpuData(cdata)
+
+      const dres = await fetch('/api/disk')
+      const ddata = await dres.json()
+      setDiskData(ddata)
 
       const pres = await fetch('/api/processes')
       const pdata = await pres.json()
@@ -54,6 +56,7 @@ export function Home() {
               memoryData={memoryData}
               swapData={swapData}
               cpuData={cpuData}
+              diskData={diskData}
               processList={processList}
             />
           </>
