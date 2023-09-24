@@ -4,13 +4,27 @@ use async_std::task;
 use include_dir::{include_dir, Dir};
 use clap::{Parser, command};
 
+mod api;
+mod request_data;
+mod resource_watcher;
+mod util;
+
 static FRONTEND_DIR: Dir = include_dir!("../frontend/dist");
 
+/// Resource monitor, entirely accessible from the web
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
   #[arg(short, long, default_value = "6565")]
   port: u16,
+
+  /// Max amount of memory history to keep at once
+  #[arg(short, long, default_value = "1h")]
+  mem_history_max: String,
+
+  /// Max amount of CPU history to keep at once
+  #[arg(short, long, default_value = "1h")]
+  cpu_history_max: String,
 }
 
 fn main() {
@@ -29,6 +43,11 @@ fn main() {
   );
 
   recursive_serve(&mut app, None);
+
+  api::register_routes(&mut app, api::ApiSettings {
+    mem_history_max: util::relative_to_seconds(args.mem_history_max),
+    cpu_history_max: util::relative_to_seconds(args.cpu_history_max),
+  });
 
   task::block_on(async {
     app.listen(
