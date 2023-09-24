@@ -1,6 +1,6 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, MutexGuard};
 use serde::Serialize;
-use sysinfo::{System, SystemExt, CpuExt};
+use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt};
 
 use crate::api::ApiSettings;
 
@@ -23,30 +23,32 @@ pub struct CPU {
 pub struct Process {
   name: String,
   pid: u32,
-  cpu: f64,
+  cpu: f32,
   mem: u64,
 }
 
 #[derive(Clone)]
 pub struct ResourceWatcher {
+  update_rate: u64,
   pub mem_history: Arc<Mutex<Vec<Memory>>>,
   pub swap_history: Arc<Mutex<Vec<Memory>>>,
   pub cpu_history: Arc<Mutex<Vec<CPU>>>,
   pub mem_history_max: usize,
   pub cpu_history_max: usize,
-  pub process_list: Vec<Process>,
+  pub process_list: Arc<Mutex<Vec<Process>>>,
   system: Arc<Mutex<System>>,
 }
 
 impl ResourceWatcher {
   pub fn new(settings: ApiSettings) -> Self {
     Self {
+      update_rate: settings.update_rate,
       mem_history: Arc::new(Mutex::new(Vec::new())),
       swap_history: Arc::new(Mutex::new(Vec::new())),
       cpu_history: Arc::new(Mutex::new(Vec::new())),
       mem_history_max: settings.mem_history_max as usize,
       cpu_history_max: settings.cpu_history_max as usize,
-      process_list: Vec::new(),
+      process_list: Arc::new(Mutex::new(Vec::new())),
       system: Arc::new(Mutex::new(System::new_all())),
     }
   }
@@ -58,7 +60,7 @@ impl ResourceWatcher {
     std::thread::spawn(move || {
       loop {
         clone.update();
-        std::thread::sleep(std::time::Duration::from_secs(15));
+        std::thread::sleep(std::time::Duration::from_secs(clone.update_rate));
       }
     });
   }
@@ -68,6 +70,7 @@ impl ResourceWatcher {
     let mut mem_history = self.mem_history.as_ref().lock().unwrap();
     let mut swap_history = self.swap_history.as_ref().lock().unwrap();
     let mut cpu_history = self.cpu_history.as_ref().lock().unwrap();
+    let mut process_list = self.process_list.as_ref().lock().unwrap();
 
     system.refresh_cpu();
     system.refresh_memory();
@@ -117,6 +120,18 @@ impl ResourceWatcher {
 
     if cpu_history.len() > self.cpu_history_max {
       cpu_history.remove(0);
+    }
+
+    // Clear the old process list
+    process_list.clear();
+
+    for (pid, process) in system.processes() {
+      process_list.push(Process {
+        name: process.name().to_string(),
+        pid: pid.as_u32(),
+        cpu: process.cpu_usage(),
+        mem: process.memory(),
+      });
     }
   }
 }

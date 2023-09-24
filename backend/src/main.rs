@@ -19,12 +19,16 @@ struct Args {
   port: u16,
 
   /// Max amount of memory history to keep at once
-  #[arg(short, long, default_value = "1h")]
+  #[arg(short, long, default_value = "15m")]
   mem_history_max: String,
 
   /// Max amount of CPU history to keep at once
-  #[arg(short, long, default_value = "1h")]
+  #[arg(short, long, default_value = "15m")]
   cpu_history_max: String,
+
+  /// Rate (in seconds) at which to update the resource monitor
+  #[arg(short, long, default_value = "5")]
+  update_rate: u64,
 }
 
 fn main() {
@@ -47,6 +51,7 @@ fn main() {
   api::register_routes(&mut app, api::ApiSettings {
     mem_history_max: util::relative_to_seconds(args.mem_history_max),
     cpu_history_max: util::relative_to_seconds(args.cpu_history_max),
+    update_rate: args.update_rate,
   });
 
   task::block_on(async {

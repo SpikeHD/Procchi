@@ -6,6 +6,7 @@ use crate::resource_watcher::ResourceWatcher;
 pub struct ApiSettings {
   pub mem_history_max: u64,
   pub cpu_history_max: u64,
+  pub update_rate: u64,
 }
 
 #[derive(Serialize, Clone)]
@@ -36,6 +37,7 @@ pub fn register_routes(app: &mut tide::Server<()>, settings: ApiSettings) {
   app.at("/api/memory").get(memory);
   app.at("/api/swap").get(swap);
   app.at("/api/cpu").get(cpu);
+  app.at("/api/processes").get(processes);
   app.at("/api/sysinfo").get(sysinfo);
 }
 
@@ -57,6 +59,16 @@ pub fn fetch_system_info() {
       uptime: system.uptime(),
     });
   }
+}
+
+pub async fn processes(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
+  let watcher = unsafe { RESOURCE_WATCHER.as_ref().unwrap() };
+  let mut res = tide::Response::new(200);
+
+  res.set_body(serde_json::to_vec(&watcher.process_list).unwrap());
+  res.set_content_type("application/json");
+
+  Ok(res)
 }
 
 pub async fn memory(_req: tide::Request<()>) -> Result<tide::Response, tide::Error> {
