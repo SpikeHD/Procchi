@@ -102,7 +102,7 @@ fn main() {
 
   // Server index.html at the root
   app.at("/").get(
-    move |req: tide::Request<State>| async move {
+    move |_req: tide::Request<State>| async move {
       let mut res = tide::Response::new(200);
       res.set_body(FRONTEND_DIR.get_file("index.html").unwrap().contents().to_vec());
       res.set_content_type("text/html");

@@ -1800,9 +1800,8 @@ dependencies = [
 
 [[package]]
 name = "tide-http-auth"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "344026ae31b49e9e5429098fe1bace26c93de3a7b034f63ff5442d49d46e174d"
+version = "0.5.1-alpha.0"
+source = "git+https://github.com/Atmelfan/tide-http-auth/?branch=latest#342b395686072cf9078a4bd20238830ddeac668c"
 dependencies = [
  "async-trait",
  "base64 0.13.1",
