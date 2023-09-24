@@ -1,5 +1,5 @@
-pub struct MemoryHistoryRequest {}
+pub struct _MemoryHistoryRequest {}
 
-pub struct CPUHistoryRequest {}
+pub struct _CPUHistoryRequest {}
 
-pub struct NetworkHistoryRequest {}
+pub struct _NetworkHistoryRequest {}
