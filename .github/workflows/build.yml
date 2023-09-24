@@ -29,6 +29,7 @@ jobs:
 
     steps:
       - uses: oven-sh/setup-bun@v1
+        if: matrix.platform != 'windows-latest'
         with:
           bun-version: latest
 
