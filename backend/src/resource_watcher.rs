@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 use serde::Serialize;
-use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt, DiskExt};
+use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt, DiskExt, NetworkExt};
 
 use crate::api::ApiSettings;
 
@@ -34,6 +34,13 @@ pub struct Disk {
   used: u64,
 }
 
+#[derive(Clone, Serialize)]
+pub struct Network {
+  name: String,
+  recieve: u64,
+  transmit: u64,
+}
+
 #[derive(Clone)]
 pub struct ResourceWatcher {
   update_rate: u64,
@@ -41,6 +48,7 @@ pub struct ResourceWatcher {
   pub swap_history: Arc<Mutex<Vec<Memory>>>,
   pub cpu_history: Arc<Mutex<Vec<CPU>>>,
   pub disks: Arc<Mutex<Vec<Disk>>>,
+  pub network: Arc<Mutex<Vec<Network>>>,
   pub mem_history_max: usize,
   pub cpu_history_max: usize,
   pub process_list: Arc<Mutex<Vec<Process>>>,
@@ -55,6 +63,7 @@ impl ResourceWatcher {
       swap_history: Arc::new(Mutex::new(Vec::new())),
       cpu_history: Arc::new(Mutex::new(Vec::new())),
       disks: Arc::new(Mutex::new(Vec::new())),
+      network: Arc::new(Mutex::new(Vec::new())),
       mem_history_max: settings.mem_history_max as usize,
       cpu_history_max: settings.cpu_history_max as usize,
       process_list: Arc::new(Mutex::new(Vec::new())),
@@ -80,6 +89,7 @@ impl ResourceWatcher {
     let mut swap_history = self.swap_history.as_ref().lock().unwrap();
     let mut cpu_history = self.cpu_history.as_ref().lock().unwrap();
     let mut disks = self.disks.as_ref().lock().unwrap();
+    let mut network = self.network.as_ref().lock().unwrap();
     let mut process_list = self.process_list.as_ref().lock().unwrap();
 
     system.refresh_cpu();
@@ -140,6 +150,17 @@ impl ResourceWatcher {
         name: format!("{:?}", disk.name()),
         total: disk.total_space(),
         used: disk.total_space() - disk.available_space(),
+      });
+    }
+
+    // Clear the old network list
+    network.clear();
+
+    for (name, data) in system.networks() {
+      network.push(Network {
+        name: name.to_string(),
+        recieve: data.received(),
+        transmit: data.transmitted(),
       });
     }
 

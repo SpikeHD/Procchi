@@ -16,6 +16,12 @@ interface Disk {
   used: number,
 }
 
+interface Network {
+  name: string,
+  recieve: number,
+  transmit: number,
+}
+
 interface Process {
   name: string;
   pid: number;

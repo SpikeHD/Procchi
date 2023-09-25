@@ -24,7 +24,6 @@ export function App() {
         </main>
       </LocationProvider>
     </div>
-
   )
 }
 

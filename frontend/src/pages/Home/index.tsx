@@ -9,6 +9,7 @@ export function Home() {
   const [swapData, setSwapData] = useState([] as Memory[])
   const [cpuData, setCpuData] = useState([] as CPU[])
   const [diskData, setDiskData] = useState([] as Disk[])
+  const [networkData, setNetworkData] = useState([] as Network[])
   const [processList, setProcessList] = useState([] as Process[])
 
   useEffect(() => {
@@ -28,6 +29,10 @@ export function Home() {
       const dres = await fetch('/api/disk')
       const ddata = await dres.json()
       setDiskData(ddata)
+
+      const nres = await fetch('/api/network')
+      const ndata = await nres.json()
+      setNetworkData(ndata)
 
       const pres = await fetch('/api/processes')
       const pdata = await pres.json()
@@ -57,6 +62,7 @@ export function Home() {
               swapData={swapData}
               cpuData={cpuData}
               diskData={diskData}
+              networkData={networkData}
               processList={processList}
             />
           </>
