@@ -1,6 +1,6 @@
-use std::sync::{Arc, Mutex};
 use serde::Serialize;
-use sysinfo::{System, SystemExt, CpuExt, ProcessExt, PidExt, DiskExt, NetworkExt};
+use std::sync::{Arc, Mutex};
+use sysinfo::{CpuExt, DiskExt, NetworkExt, PidExt, ProcessExt, System, SystemExt};
 
 use crate::api::ApiSettings;
 
@@ -13,7 +13,7 @@ pub struct Memory {
 }
 
 #[derive(Clone, Copy, Serialize)]
-pub struct CPU {
+pub struct Cpu {
   timestamp: u64,
   // This is a percentage
   used: f32,
@@ -46,7 +46,7 @@ pub struct ResourceWatcher {
   update_rate: u64,
   pub mem_history: Arc<Mutex<Vec<Memory>>>,
   pub swap_history: Arc<Mutex<Vec<Memory>>>,
-  pub cpu_history: Arc<Mutex<Vec<CPU>>>,
+  pub cpu_history: Arc<Mutex<Vec<Cpu>>>,
   pub disks: Arc<Mutex<Vec<Disk>>>,
   pub network: Arc<Mutex<Vec<Network>>>,
   pub mem_history_max: usize,
@@ -75,11 +75,9 @@ impl ResourceWatcher {
     let mut clone = self.clone();
 
     // Spawn a thread that updates memory and CPU usage every 15 seconds
-    std::thread::spawn(move || {
-      loop {
-        clone.update();
-        std::thread::sleep(std::time::Duration::from_secs(clone.update_rate));
-      }
+    std::thread::spawn(move || loop {
+      clone.update();
+      std::thread::sleep(std::time::Duration::from_secs(clone.update_rate));
     });
   }
 
@@ -102,7 +100,10 @@ impl ResourceWatcher {
     let swap_free = system.free_swap();
     let available = system.available_memory();
     let used = mem - free;
-    let timestamp = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs();
+    let timestamp = std::time::SystemTime::now()
+      .duration_since(std::time::UNIX_EPOCH)
+      .unwrap()
+      .as_secs();
 
     mem_history.push(Memory {
       timestamp,
@@ -133,7 +134,7 @@ impl ResourceWatcher {
       cpu_use_avg += cpu.cpu_usage();
     }
 
-    cpu_history.push(CPU {
+    cpu_history.push(Cpu {
       timestamp,
       used: cpu_use_avg / system.cpus().len() as f32,
     });

@@ -1,11 +1,11 @@
-use std::{path::Path, io::Write};
 use async_std::task;
+use clap::{command, Parser};
 use include_dir::{include_dir, Dir};
-use clap::{Parser, command};
 use rpassword::read_password;
 use sha2::Digest;
+use std::{io::Write, path::Path};
 use tide::utils::async_trait;
-use tide_http_auth::{Storage, BasicAuthRequest};
+use tide_http_auth::{BasicAuthRequest, Storage};
 
 mod api;
 mod middleware;
@@ -18,7 +18,7 @@ static FRONTEND_DIR: Dir = include_dir!("../frontend/dist");
 #[derive(Clone)]
 struct User {
   username: String,
-  
+
   // Password is the hashed password using sha156
   password: Vec<u8>,
 }
@@ -31,10 +31,7 @@ pub struct State {
 impl State {
   fn new(username: String, password: Vec<u8>) -> Self {
     Self {
-      user: User {
-        username,
-        password,
-      },
+      user: User { username, password },
     }
   }
 }
@@ -108,37 +105,45 @@ fn main() {
   let mut app = tide::with_state(state);
 
   app.with(tide_http_auth::Authentication::new(
-    tide_http_auth::BasicAuthScheme::default(),
+    tide_http_auth::BasicAuthScheme {},
   ));
 
   // Out own middleware that always verifies requests
-  app.with(
-    middleware::AuthMiddleware {}
-  );
+  app.with(middleware::AuthMiddleware {});
 
   // Server index.html at the root
-  app.at("/").get(
-    move |_req: tide::Request<State>| async move {
+  app
+    .at("/")
+    .get(move |_req: tide::Request<State>| async move {
       let mut res = tide::Response::new(200);
-      res.set_body(FRONTEND_DIR.get_file("index.html").unwrap().contents().to_vec());
+      res.set_body(
+        FRONTEND_DIR
+          .get_file("index.html")
+          .unwrap()
+          .contents()
+          .to_vec(),
+      );
       res.set_content_type("text/html");
 
       Ok(res)
-    },
-  );
+    });
 
   recursive_serve(&mut app, None);
 
-  api::register_routes(&mut app, api::ApiSettings {
-    mem_history_max: util::relative_to_seconds(args.mem_history_max),
-    cpu_history_max: util::relative_to_seconds(args.cpu_history_max),
-    update_rate: args.update_rate,
-  });
+  api::register_routes(
+    &mut app,
+    api::ApiSettings {
+      mem_history_max: util::relative_to_seconds(args.mem_history_max),
+      cpu_history_max: util::relative_to_seconds(args.cpu_history_max),
+      update_rate: args.update_rate,
+    },
+  );
 
   task::block_on(async {
-    app.listen(
-      format!("127.0.0.1:{}", args.port),
-    ).await.unwrap();
+    app
+      .listen(format!("127.0.0.1:{}", args.port))
+      .await
+      .unwrap();
   })
 }
 
@@ -152,14 +157,19 @@ fn recursive_serve(app: &mut tide::Server<State>, path: Option<&Path>) {
 
     println!("Serving {}", path);
 
-    app.at(&path).get(
-      move |_req: tide::Request<State>| async move {
+    app
+      .at(&path)
+      .get(move |_req: tide::Request<State>| async move {
         let mut res = tide::Response::new(200);
         res.set_body(file.contents().to_vec());
-        res.set_content_type(mime_guess::from_path(file.path()).first().unwrap().essence_str());
+        res.set_content_type(
+          mime_guess::from_path(file.path())
+            .first()
+            .unwrap()
+            .essence_str(),
+        );
         Ok(res)
-      },
-    );
+      });
   }
 
   // For all dirs in dir, recursively serve the files within

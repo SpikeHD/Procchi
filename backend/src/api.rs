@@ -1,5 +1,5 @@
-use sysinfo::{SystemExt, System, CpuExt};
 use serde::Serialize;
+use sysinfo::{CpuExt, System, SystemExt};
 
 use crate::{resource_watcher::ResourceWatcher, State};
 
@@ -133,9 +133,7 @@ pub async fn sysinfo(_req: tide::Request<State>) -> Result<tide::Response, tide:
   let sysinfo = unsafe { SYSTEM_INFO.as_ref().unwrap() };
   let mut res = tide::Response::new(200);
 
-  res.set_body(
-    serde_json::to_vec(sysinfo).unwrap(),
-  );
+  res.set_body(serde_json::to_vec(sysinfo).unwrap());
   res.set_content_type("application/json");
 
   Ok(res)
