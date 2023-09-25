@@ -1,0 +1,34 @@
+name: Lint frontend
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build.yml'
+      - 'package.json'
+      - 'frontend/**/*'
+  pull_request:
+    paths:
+      - '.github/workflows/build.yml'
+      - 'package.json'
+      - 'frontend/**/*'
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend
+      
+      - name: Lint
+        run: npm run eslint ./frontend/src
+        working-directory: frontend
