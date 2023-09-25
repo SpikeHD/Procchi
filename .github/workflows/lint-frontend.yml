@@ -3,12 +3,12 @@ name: Lint frontend
 on:
   push:
     paths:
-      - '.github/workflows/build.yml'
+      - '.github/workflows/lint-frontend.yml'
       - 'package.json'
       - 'frontend/**/*'
   pull_request:
     paths:
-      - '.github/workflows/build.yml'
+      - '.github/workflows/lint-frontend.yml'
       - 'package.json'
       - 'frontend/**/*'
 

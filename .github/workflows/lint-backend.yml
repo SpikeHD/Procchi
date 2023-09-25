@@ -3,14 +3,14 @@ name: Lint backend
 on:
   push:
     paths:
-      - '.github/workflows/build.yml'
+      - '.github/workflows/lint-backend.yml'
       - 'package.json'
-      - 'frontend/**/*'
+      - 'backend/**/*'
   pull_request:
     paths:
-      - '.github/workflows/build.yml'
+      - '.github/workflows/lint-backend.yml'
       - 'package.json'
-      - 'frontend/**/*'
+      - 'backend/**/*'
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
