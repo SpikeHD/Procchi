@@ -16,6 +16,8 @@ interface Props {
   }[],
   xLabel?: string
   yLabel?: string
+  min?: number
+  max?: number
 }
 
 export function LineGraph(props: Props) {
@@ -45,26 +47,29 @@ export function LineGraph(props: Props) {
         }
       })
     })
-  }, [])
+  }, [props.datasets])
 
   return (
     <div className="graph-container">
       <Line
         data={data}
         options={{
+          animation: false,
           maintainAspectRatio: false,
           scales: {
             x: {
               title: {
                 display: props.xLabel !== undefined,
                 text: props.xLabel
-              }
+              },
             },
             y: {
               title: {
                 display: props.yLabel !== undefined,
                 text: props.yLabel
-              }
+              },
+              suggestedMin: props.min || null,
+              suggestedMax: props.max || null
             }
           }
         }}

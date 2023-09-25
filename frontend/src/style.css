@@ -2,7 +2,7 @@
   --background: #fbfefb;
   --text-primary: var(--background);
   --text-secondary: #092207;
-  --color-primary: #824f92;
+  --color-primary: rgba(255, 99, 132, 0.6);
   --color-secondary: #efc3ef;
   --color-accent: #c832c8;
 }

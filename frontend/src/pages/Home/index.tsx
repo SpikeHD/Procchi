@@ -72,7 +72,7 @@ export function Home() {
               <LineGraph
                 labels={ memoryData.map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
                 xLabel='Time'
-                yLabel='Memory Usage'
+                yLabel='Memory Usage (MB)'
                 datasets={[
                   {
                     data: memoryData.map((v) => {
@@ -91,6 +91,25 @@ export function Home() {
                     label: 'Swap Usage (MB)',
                     color: 'rgba(54, 162, 235, 0.6)',
                     backgroundColor: 'rgb(54, 162, 235, 0.2)'
+                  }
+                ]}
+              />
+
+              { /* CPU line */ }
+              <LineGraph
+                labels={ cpuData.map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
+                xLabel='Time'
+                yLabel='CPU Usage (%)'
+                min={0}
+                max={100}
+                datasets={[
+                  {
+                    data: cpuData.map((v) => {
+                      return v.used
+                    }),
+                    label: 'CPU Usage (%)',
+                    color: 'rgba(255, 99, 132, 0.6)',
+                    backgroundColor: 'rgb(255, 99, 132, 0.2)'
                   }
                 ]}
               />
