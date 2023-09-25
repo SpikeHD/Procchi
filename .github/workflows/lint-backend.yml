@@ -35,10 +35,10 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --manifest-path ./src-tauri/Cargo.toml --all -- --check
+          args: --manifest-path ./backend/Cargo.toml --all -- --check
 
       - name: Cargo clippy
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --manifest-path ./src-tauri/Cargo.toml --all -- -D warnings
+          args: --manifest-path ./backend/Cargo.toml --all -- -D warnings
