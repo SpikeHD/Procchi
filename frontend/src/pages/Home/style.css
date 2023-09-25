@@ -9,11 +9,21 @@
 }
 
 .home-root {
-  height: 100%;
+  height: 20%;
   width: 100%;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+
+.home-graphs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 80%;
+  width: 100%;
 }

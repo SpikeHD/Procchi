@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks'
 import { Loader } from '../../components/Loader'
 import { QuickStats } from '../../components/QuickStats'
 import './style.css'
+import { LineGraph } from '../../components/graph/LineGraph'
 
 export function Home() {
   const [sysinfo, setSysinfo] = useState({} as SystemInfo)
@@ -65,6 +66,35 @@ export function Home() {
               networkData={networkData}
               processList={processList}
             />
+
+            <div className="home-graphs">
+              { /* Memory line */ }
+              <LineGraph
+                labels={ memoryData.map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
+                xLabel='Time'
+                yLabel='Memory Usage'
+                datasets={[
+                  {
+                    data: memoryData.map((v) => {
+                      // Convert to MB
+                      return v.used / 1024 / 1024
+                    }),
+                    label: 'Memory Usage (MB)',
+                    color: 'rgba(255, 99, 132, 0.6)',
+                    backgroundColor: 'rgb(255, 99, 132, 0.2)'
+                  },
+                  {
+                    data: swapData.map((v) => {
+                      // Convert to MB
+                      return v.used / 1024 / 1024
+                    }),
+                    label: 'Swap Usage (MB)',
+                    color: 'rgba(54, 162, 235, 0.6)',
+                    backgroundColor: 'rgb(54, 162, 235, 0.2)'
+                  }
+                ]}
+              />
+            </div>
           </>
         ) : (
           <div className="loading">
