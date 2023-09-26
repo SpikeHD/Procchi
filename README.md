@@ -25,6 +25,8 @@
   * [First Time Setup](#first-time-setup)
   * [Develop](#develop)
   * [Build](#build)
+* [Screenshots](#screenshots)
+* [TODO](#todo)
 * [Contributing](#contributing)
 
 # Installation
@@ -107,6 +109,14 @@ npm run build
 <details>
   <summary>Click to expand</summary>
 </details>
+
+# TODO
+
+* [ ] Better mobile formatting
+* [ ] "Plugins" for specific process types
+  * [ ] Minecraft Server(s)
+  * [ ] Docker containers
+  * [ ] Logs (nginx, apache, syslog, etc.)
 
 # Contributing
 
