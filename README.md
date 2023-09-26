@@ -46,19 +46,15 @@ Run the binary via terminal to view a full list of options:
 
 ## Examples
 
-Start Procchi on port 7766, with test authentication credentials
 ```sh
+# Start Procchi on port 7766, with test authentication credentials
 ./procchi -p 7766 -u test -k test
-```
-*(If `-u` and `-k` are not specified, Procchi will prompt for credentials before deploying the web server, which is reccommended)*
+# (If `-u` and `-k` are not specified, Procchi will prompt for credentials before deploying the web server, which is reccommended)
 
-Start Procchi on the default port (6565), have memory and CPU history tracked up to 10 minutes
-```sh
+# Start Procchi on the default port (6565), have memory and CPU history tracked up to 10 minutes
 ./procchi -m 10m -c 10m
-```
 
-Start Procchi configured to update every 10 seconds (instead of the default of 5 seconds)
-```sh
+# Start Procchi configured to update every 10 seconds (instead of the default of 5 seconds)
 ./procchi -r 10
 ```
 
