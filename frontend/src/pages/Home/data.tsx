@@ -107,6 +107,14 @@ export function DataHome(props: Props) {
               xLabel="Time"
               yLabel="Disk Usage (GB)"
               min={0}
+              max={
+                // get the largest disk size
+                Math.max(
+                  ...Object.keys(diskData).map((disk) => {
+                    return diskData[disk][0].total
+                  })
+                ) / 1024 / 1024 / 1024
+              }
               datasets={Object.keys(diskData).map((disk, i) => {
                 return {
                   data: diskData[disk].map((v) => {

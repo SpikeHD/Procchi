@@ -55,7 +55,7 @@ struct Args {
   port: u16,
 
   /// Max amount of history to keep at once for each metric
-  #[arg(short, long, default_value = "100")]
+  #[arg(short = 'm', long, default_value = "100")]
   history_max: usize,
 
   /// Rate (in seconds) at which to update the resource monitor
