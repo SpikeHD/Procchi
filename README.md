@@ -66,7 +66,7 @@ Start Procchi configured to update every 10 seconds (instead of the default of 5
 
 ## Prerequisites
 
-* Node.js (20.x)
+* Node.js (20.x) or Bun (latest)
 * Cargo/Rust (latest)
 
 ## First time setup
