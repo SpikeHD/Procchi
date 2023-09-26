@@ -1,5 +1,8 @@
 use serde::Serialize;
-use std::{sync::{Arc, Mutex}, collections::HashMap};
+use std::{
+  collections::HashMap,
+  sync::{Arc, Mutex},
+};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, PidExt, ProcessExt, System, SystemExt};
 
 use crate::web::api::ApiSettings;
@@ -145,7 +148,7 @@ impl ResourceWatcher {
 
     // For each disk name, add it's current usage to it's list in the hashmap
     for disk in system.disks() {
-      let name = format!("{:?}", disk.name()).replace("\"", "");
+      let name = format!("{:?}", disk.name()).replace('\"', "");
 
       if !disks.contains_key(&name) {
         disks.insert(name.clone(), Vec::new());

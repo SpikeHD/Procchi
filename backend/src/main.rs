@@ -7,9 +7,9 @@ use std::{io::Write, path::Path};
 use tide::utils::async_trait;
 use tide_http_auth::{BasicAuthRequest, Storage};
 
-mod web;
 mod resource_watcher;
 mod util;
+mod web;
 
 static FRONTEND_DIR: Dir = include_dir!("../frontend/dist");
 
@@ -141,7 +141,10 @@ fn main() {
   println!("Retaining {} of memory history", args.mem_history_max);
   println!("Retaining {} of CPU history", args.cpu_history_max);
   println!("Updating every {} seconds", args.update_rate);
-  println!("Done! Access the web interface at http://localhost:{}/", args.port);
+  println!(
+    "Done! Access the web interface at http://localhost:{}/",
+    args.port
+  );
 
   task::block_on(async {
     app
