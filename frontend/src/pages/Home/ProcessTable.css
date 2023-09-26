@@ -59,6 +59,10 @@
   width: 100%;
 }
 
+.process-table-row:hover {
+  background-color: rgba(0, 0, 0, 0.1)
+}
+
 .short {
   width: 15% !important;
   align-items: center !important;
