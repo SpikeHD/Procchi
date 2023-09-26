@@ -1,0 +1,34 @@
+.process-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 50%;
+  height: 400px;
+}
+
+.process-count-big {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.process-count-small {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.home-table,
+.home-graphs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 80%;
+  width: 100%;
+}
+
+.home-table {
+  justify-content: center;
+}

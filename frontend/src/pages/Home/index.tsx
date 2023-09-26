@@ -2,8 +2,8 @@ import { useEffect, useState } from 'preact/hooks'
 import { Loader } from '../../components/Loader'
 import { QuickStats } from '../../components/QuickStats'
 import './style.css'
-import { LineGraph } from '../../components/graph/LineGraph'
 import { randomRGBAColors } from '../../util/colors'
+import { DataHome } from './data'
 
 export function Home() {
   const [sysinfo, setSysinfo] = useState({} as SystemInfo)
@@ -76,91 +76,16 @@ export function Home() {
               processList={processList}
             />
 
-            <div className="home-graphs">
-              { /* Memory line */ }
-              <LineGraph
-                labels={ memoryData.map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
-                xLabel='Time'
-                yLabel='Memory Usage (MB)'
-                datasets={[
-                  {
-                    data: memoryData.map((v) => {
-                      // Convert to MB
-                      return v.used / 1024 / 1024
-                    }),
-                    label: 'Memory Usage (MB)',
-                    color: 'rgba(255, 99, 132, 0.6)',
-                    backgroundColor: 'rgb(255, 99, 132, 0.2)'
-                  },
-                  {
-                    data: swapData.map((v) => {
-                      // Convert to MB
-                      return v.used / 1024 / 1024
-                    }),
-                    label: 'Swap Usage (MB)',
-                    color: 'rgba(54, 162, 235, 0.6)',
-                    backgroundColor: 'rgb(54, 162, 235, 0.2)'
-                  }
-                ]}
-              />
-
-              { /* CPU line */ }
-              <LineGraph
-                labels={ cpuData.map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
-                xLabel='Time'
-                yLabel='CPU Usage (%)'
-                min={0}
-                max={100}
-                datasets={[
-                  {
-                    data: cpuData.map((v) => {
-                      return v.used
-                    }),
-                    label: 'CPU Usage (%)',
-                    color: 'rgba(255, 99, 132, 0.6)',
-                    backgroundColor: 'rgb(255, 99, 132, 0.2)'
-                  }
-                ]}
-              />
-            </div>
-
-            <div className="home-graphs">
-              { /* Disks */ }
-              <LineGraph
-                // All disks have the same timestamps, so just use the first one
-                labels={ diskData[Object.keys(diskData)[0]].map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
-                xLabel='Time'
-                yLabel='Disk Usage (GB)'
-                min={0}
-                datasets={Object.keys(diskData).map((disk, i) => {
-                  return {
-                    data: diskData[disk].map((v) => {
-                      // Convert to GB
-                      return v.used / 1024 / 1024 / 1024
-                    }),
-                    label: disk === '' ? 'Unknown Disk ' + i : disk.trim(),
-                    color: diskColors[i]?.color || 'rgba(255, 99, 132, 0.6)',
-                    backgroundColor: diskColors[i]?.backgroundColor || 'rgb(255, 99, 132, 0.2)'
-                  }
-                })}
-              />
-
-              { /* Network (same format as Disks)*/ }
-              <LineGraph
-                labels={ networkData[Object.keys(networkData)[0]].map((v) => new Date(v.timestamp * 1000).toLocaleTimeString()) }
-                xLabel='Time'
-                yLabel='Network Usage (MB)'
-                datasets={Object.keys(networkData).map((network, i) => {
-                  return {
-                    data: networkData[network].map((v) => {
-                      // Convert to MB
-                      return v.recieve / 1024 / 1024
-                    }),
-                    label: network === '' ? 'Unknown Network ' + i : network.trim(),
-                    color: 'rgba(255, 99, 132, 0.6)',
-                    backgroundColor: 'rgb(255, 99, 132, 0.2)'
-                  }
-                })}
+            <div className="home-main">
+              <DataHome
+                sysinfo={sysinfo}
+                memoryData={memoryData}
+                swapData={swapData}
+                cpuData={cpuData}
+                diskData={diskData}
+                networkData={networkData}
+                processList={processList}
+                diskColors={diskColors}
               />
             </div>
           </>

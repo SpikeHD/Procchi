@@ -51,6 +51,11 @@ export function QuickStats(props: Props) {
         </div>
 
         <div className="stat">
+          <span className="stat-big">{props.processList.length}</span>
+          <span className="stat-small">Active Processes</span>
+        </div>
+
+        <div className="stat">
           <span className="stat-big">
             {bytesToReadable(netRecieve)} <ArrowDown /> / {bytesToReadable(netTransmit)} <ArrowUp />
           </span>
