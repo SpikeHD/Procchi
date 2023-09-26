@@ -31,6 +31,13 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Build frontend (sicne it's required to compile)
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          cd ..
+
       - name: Cargo format
         uses: actions-rs/cargo@v1
         with:
