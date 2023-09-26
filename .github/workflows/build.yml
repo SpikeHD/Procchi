@@ -50,11 +50,11 @@ jobs:
 
       - name: Build
         if: matrix.platform != 'windows-latest'
-        run: bun run build
+        run: bun run build:bun
 
       - name: Build (Windows)
         if: matrix.platform == 'windows-latest'
-        run: cd ./frontend && npm run build && cd ../backend && cargo build --release
+        run: npm run build
 
       - name: Upload
         uses: actions/upload-artifact@v2
