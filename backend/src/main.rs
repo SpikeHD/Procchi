@@ -73,6 +73,10 @@ struct Args {
   /// Password to use for authentication. Not reccommended, use the prompt instead
   #[arg(short = 'k', long)]
   password: Option<String>,
+
+  /// Access address
+  #[arg(short = 'a', long, default_value = "127.0.0.1")]
+  address: String,
 }
 
 fn main() {
@@ -142,13 +146,14 @@ fn main() {
   println!("Retaining {} of CPU history", args.cpu_history_max);
   println!("Updating every {} seconds", args.update_rate);
   println!(
-    "Done! Access the web interface at http://localhost:{}/",
+    "Done! Access the web interface at http://{}:{}/",
+    args.address,
     args.port
   );
 
   task::block_on(async {
     app
-      .listen(format!("127.0.0.1:{}", args.port))
+      .listen(format!("{}:{}", args.address, args.port))
       .await
       .unwrap();
   })
