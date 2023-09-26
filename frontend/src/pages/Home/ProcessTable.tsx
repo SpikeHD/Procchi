@@ -2,6 +2,8 @@ import { useEffect, useState } from 'preact/hooks'
 import { bytesToReadable } from '../../util/byte'
 
 import './ProcessTable.css'
+import { ArrowDown } from '../../components/icons/ArrowDown'
+import { ArrowUp } from '../../components/icons/ArrowUp'
 
 interface Props {
   processList: Process[];
@@ -49,7 +51,16 @@ export function ProcessTable(props: Props) {
               reverse: prev.key === 'pid' ? !prev.reverse : false
             }))
           }}
-        >PID</span>
+        >
+          <p>PID</p>
+          {
+            sortType.key === 'pid' ? (sortType.reverse ? (
+              <ArrowDown />
+            ) : (
+              <ArrowUp />
+            )) : null
+          }
+        </span>
         <span
           className="process-table-cell process-header-sortable"
           onClick={() => {
@@ -58,7 +69,16 @@ export function ProcessTable(props: Props) {
               reverse: prev.key === 'name' ? !prev.reverse : false
             }))
           }}
-        >Name</span>
+        >
+          <p>Name</p>
+          {
+            sortType.key === 'name' ? (sortType.reverse ? (
+              <ArrowDown />
+            ) : (
+              <ArrowUp />
+            )) : null
+          }
+        </span>
         <span
           className="process-table-cell short process-header-sortable"
           onClick={() => {
@@ -67,7 +87,16 @@ export function ProcessTable(props: Props) {
               reverse: prev.key === 'cpu' ? !prev.reverse : false
             }))
           }}
-        >CPU (%)</span>
+        >
+          <p>CPU (%)</p>
+          {
+            sortType.key === 'cpu' ? (sortType.reverse ? (
+              <ArrowDown />
+            ) : (
+              <ArrowUp />
+            )) : null
+          }
+        </span>
         <span
           className="process-table-cell short process-header-sortable"
           onClick={() => {
@@ -76,7 +105,16 @@ export function ProcessTable(props: Props) {
               reverse: prev.key === 'mem' ? !prev.reverse : false
             }))
           }}
-        >Memory</span>
+        >
+          <p>Memory</p>
+          {
+            sortType.key === 'mem' ? (sortType.reverse ? (
+              <ArrowDown />
+            ) : (
+              <ArrowUp />
+            )) : null
+          }
+        </span>
       </div>
       
       { /* We use flex here */ }
