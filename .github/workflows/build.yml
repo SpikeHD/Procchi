@@ -67,5 +67,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: matrix.platform == 'windows-latest'
         with:
-          name: procchi_procchi_${{ matrix.platform }}
+          name: procchi_${{ matrix.platform }}
           path: backend/target/release/procchi.exe
