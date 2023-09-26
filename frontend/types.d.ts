@@ -10,16 +10,24 @@ interface CPU {
   used: number; // This is a percentage
 }
 
-interface Disk {
-  name: string,
+interface DiskUsage {
+  timestamp: number,
   total: number,
   used: number,
 }
 
-interface Network {
-  name: string,
+interface Disk {
+  [key:string]: DiskUsage
+}
+
+interface NetworkUsage {
+  timestamp: number,
   recieve: number,
   transmit: number,
+}
+
+interface Network {
+  [key:string]: NetworkUsage
 }
 
 interface Process {

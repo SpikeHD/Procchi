@@ -16,10 +16,10 @@ interface Props {
 export function QuickStats(props: Props) {
   const memoryUse = props.memoryData[props.memoryData.length - 1]?.used
   const swapUse = props.swapData[props.swapData.length - 1]?.used
-  const diskUse = props.diskData.map(d => d.used).reduce((a, b) => a + b)
-  const diskTotal = props.diskData.map(d => d.total).reduce((a, b) => a + b)
-  const netRecieve = props.networkData.map(n => n.recieve).reduce((a, b) => a + b)
-  const netTransmit = props.networkData.map(n => n.transmit).reduce((a, b) => a + b)
+  const diskUse = Object.keys(props.diskData).map(d => props.diskData[d][props.diskData[d].length - 1].used).reduce((a, b) => a + b)
+  const diskTotal = Object.keys(props.diskData).map(d => props.diskData[d][props.diskData[d].length - 1].total).reduce((a, b) => a + b)
+  const netRecieve = Object.keys(props.networkData).map(n => props.networkData[n][props.networkData[n].length - 1].recieve).reduce((a, b) => a + b)
+  const netTransmit = Object.keys(props.networkData).map(n => props.networkData[n][props.networkData[n].length - 1].transmit).reduce((a, b) => a + b)
   const cpuPct = props.cpuData[props.cpuData.length - 1]?.used
 
   return (
