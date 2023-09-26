@@ -56,6 +56,7 @@ export function LineGraph(props: Props) {
         options={{
           animation: false,
           maintainAspectRatio: false,
+          responsive: true,
           scales: {
             x: {
               title: {
