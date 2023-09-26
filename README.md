@@ -56,6 +56,9 @@ Run the binary via terminal to view a full list of options:
 
 # Start Procchi configured to update every 10 seconds (instead of the default of 5 seconds)
 ./procchi -r 10
+
+# Start procchi with the access address pointing to the external IP address of the machine
+./procchi -a <machine IP>
 ```
 
 # Developing
