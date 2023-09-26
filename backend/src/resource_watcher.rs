@@ -66,7 +66,7 @@ impl ResourceWatcher {
       cpu_history: Arc::new(Mutex::new(Vec::new())),
       disks: Arc::new(Mutex::new(HashMap::new())),
       network: Arc::new(Mutex::new(HashMap::new())),
-      history_max: settings.history_max as usize,
+      history_max: settings.history_max,
       process_list: Arc::new(Mutex::new(Vec::new())),
       system: Arc::new(Mutex::new(System::new_all())),
     }
@@ -115,7 +115,7 @@ impl ResourceWatcher {
 
     // The difference between the first elm and the last elm is more than the max
     // history, remove the first elm
-    if mem_history.len() > self.history_max as usize {
+    if mem_history.len() > self.history_max {
       mem_history.remove(0);
     }
 
@@ -126,7 +126,7 @@ impl ResourceWatcher {
       available: swap_free,
     });
 
-    if swap_history.len() > self.history_max as usize {
+    if swap_history.len() > self.history_max {
       swap_history.remove(0);
     }
 
@@ -142,7 +142,7 @@ impl ResourceWatcher {
       used: cpu_use_avg / system.cpus().len() as f32,
     });
 
-    if cpu_history.len() > self.history_max as usize {
+    if cpu_history.len() > self.history_max {
       cpu_history.remove(0);
     }
 
@@ -162,7 +162,7 @@ impl ResourceWatcher {
         used: disk.total_space() - disk.available_space(),
       });
 
-      if disk_vec.len() > self.history_max as usize {
+      if disk_vec.len() > self.history_max {
         disk_vec.remove(0);
       }
     }
@@ -181,7 +181,7 @@ impl ResourceWatcher {
         transmit: data.transmitted(),
       });
 
-      if network_vec.len() > self.history_max as usize {
+      if network_vec.len() > self.history_max {
         network_vec.remove(0);
       }
     }

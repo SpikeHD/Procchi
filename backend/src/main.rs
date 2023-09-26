@@ -141,8 +141,7 @@ fn main() {
   println!("Updating every {} seconds", args.update_rate);
   println!(
     "Done! Access the web interface at http://{}:{}/",
-    args.address,
-    args.port
+    args.address, args.port
   );
 
   task::block_on(async {
