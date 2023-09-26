@@ -29,7 +29,7 @@
 
 # Installation
 
-1. Download a release binary from the [releases page](https://github.com/SpikeHD/procchi/releases), and put it somewhere.
+1. Download a release binary from the [releases page](https://github.com/SpikeHD/procchi/releases) or from [actions](https://github.com/SpikeHD/procchi/actions), and put it somewhere.
   1a. If you are on a Linux platform, you can move Procchi to `/usr/bin` to make it available system-wide:
     ```sh
     sudo mv procchi /usr/bin
