@@ -1,6 +1,6 @@
 <div align=center>
   <h1>Procchi</h1>
-  <p>Resource monitoring, accessible from the web.</p>
+  <p>Stupid simple, in-memory process monitoring, acessible from the web.</p>
   <a href="https://www.discord.gg/agQ9mRdHMZ">https://discord.gg/agQ9mRdHMZ</a>
 </div>
 
