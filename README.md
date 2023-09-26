@@ -21,6 +21,10 @@
 * [Usage](#usage)
   * [Examples](#examples)
 * [Development](#development)
+  * [Prerequisites](#prerequisites)
+  * [First Time Setup](#first-time-setup)
+  * [Develop](#develop)
+  * [Build](#build)
 * [Contributing](#contributing)
 
 # Installation
@@ -53,10 +57,58 @@ Start Procchi on the default port (6565), have memory and CPU history tracked up
 ./procchi -m 10m -c 10m
 ```
 
-Start Procchi configured to update every 10 seconds (default 5 seconds)
+Start Procchi configured to update every 10 seconds (instead of the default of 5 seconds)
 ```sh
 ./procchi -r 10
 ```
+
+# Developing
+
+## Prerequisites
+
+* Node.js (20.x)
+* Cargo/Rust (latest)
+
+## First time setup
+
+1. Clone the repository
+2. Install frontend dependencies
+    ```sh
+    cd frontend
+    npm install
+    cd ..
+    ```
+3. That's it!
+
+## Develop
+
+If you are on a Unix/MacOS system with `bun` installed, you can run:
+```sh
+bun run start:bun
+```
+
+which will build and run Procchi in debug mode. Otherwise, you can run:
+```sh
+npm run start
+```
+
+## Build
+
+If you are on a Unix/MacOS system with `bun` installed, you can run:
+```sh
+bun run build:bun
+```
+
+which will build a Procchi release. Otherwise, you can run:
+```sh
+npm run build
+```
+
+# Screenshots
+
+<details>
+  <summary>Click to expand</summary>
+</details>
 
 # Contributing
 

@@ -131,11 +131,17 @@ fn main() {
   web::api::register_routes(
     &mut app,
     web::api::ApiSettings {
-      mem_history_max: util::relative_to_seconds(args.mem_history_max),
-      cpu_history_max: util::relative_to_seconds(args.cpu_history_max),
+      mem_history_max: util::relative_to_seconds(args.mem_history_max.clone()),
+      cpu_history_max: util::relative_to_seconds(args.cpu_history_max.clone()),
       update_rate: args.update_rate,
     },
   );
+
+  println!("Starting server on port {}...", args.port);
+  println!("Retaining {} of memory history", args.mem_history_max);
+  println!("Retaining {} of CPU history", args.cpu_history_max);
+  println!("Updating every {} seconds", args.update_rate);
+  println!("Done! Access the web interface at http://localhost:{}/", args.port);
 
   task::block_on(async {
     app

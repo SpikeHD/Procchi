@@ -1,9 +1,9 @@
 {
   "name": "procchi",
   "scripts": {
-    "start": "cd ./frontend && bun run build && cd ../backend && cargo run -- -u test -k test",
-    "start:win": "cd ./frontend && pnpm run build && cd ../backend && cargo run -- -u test -k test",
-    "build": "cd ./frontend && bun run build && cd ../backend && cargo build --release",
-    "build:win": "cd ./frontend && pnpm run build && cd ../backend && cargo build --release"
+    "start:bun": "cd ./frontend && bun run build && cd ../backend && cargo run -- -u test -k test",
+    "start": "cd ./frontend && npm run build && cd ../backend && cargo run -- -u test -k test",
+    "build:bun": "cd ./frontend && bun run build && cd ../backend && cargo build --release",
+    "build": "cd ./frontend && npm run build && cd ../backend && cargo build --release"
   }
 }
