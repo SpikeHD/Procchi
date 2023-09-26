@@ -55,11 +55,11 @@ struct Args {
   port: u16,
 
   /// Max amount of memory history to keep at once
-  #[arg(short, long, default_value = "15m")]
+  #[arg(short, long, default_value = "5m")]
   mem_history_max: String,
 
   /// Max amount of CPU history to keep at once
-  #[arg(short, long, default_value = "15m")]
+  #[arg(short, long, default_value = "5m")]
   cpu_history_max: String,
 
   /// Rate (in seconds) at which to update the resource monitor
