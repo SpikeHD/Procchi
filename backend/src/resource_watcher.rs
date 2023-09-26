@@ -2,7 +2,7 @@ use serde::Serialize;
 use std::{sync::{Arc, Mutex}, collections::HashMap};
 use sysinfo::{CpuExt, DiskExt, NetworkExt, PidExt, ProcessExt, System, SystemExt};
 
-use crate::api::ApiSettings;
+use crate::web::api::ApiSettings;
 
 #[derive(Clone, Copy, Serialize)]
 pub struct Memory {
@@ -145,7 +145,7 @@ impl ResourceWatcher {
 
     // For each disk name, add it's current usage to it's list in the hashmap
     for disk in system.disks() {
-      let name = format!("{:?}", disk.name());
+      let name = format!("{:?}", disk.name()).replace("\"", "");
 
       if !disks.contains_key(&name) {
         disks.insert(name.clone(), Vec::new());

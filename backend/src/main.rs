@@ -7,9 +7,7 @@ use std::{io::Write, path::Path};
 use tide::utils::async_trait;
 use tide_http_auth::{BasicAuthRequest, Storage};
 
-mod api;
-mod middleware;
-mod request_data;
+mod web;
 mod resource_watcher;
 mod util;
 
@@ -109,7 +107,7 @@ fn main() {
   ));
 
   // Out own middleware that always verifies requests
-  app.with(middleware::AuthMiddleware {});
+  app.with(web::middleware::AuthMiddleware {});
 
   // Server index.html at the root
   app
@@ -130,9 +128,9 @@ fn main() {
 
   recursive_serve(&mut app, None);
 
-  api::register_routes(
+  web::api::register_routes(
     &mut app,
-    api::ApiSettings {
+    web::api::ApiSettings {
       mem_history_max: util::relative_to_seconds(args.mem_history_max),
       cpu_history_max: util::relative_to_seconds(args.cpu_history_max),
       update_rate: args.update_rate,

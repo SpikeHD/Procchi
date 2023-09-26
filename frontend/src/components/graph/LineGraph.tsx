@@ -69,7 +69,8 @@ export function LineGraph(props: Props) {
                 text: props.yLabel
               },
               suggestedMin: props.min || null,
-              suggestedMax: props.max || null
+              suggestedMax: props.max || null,
+              beginAtZero: props.min === 0
             }
           }
         }}
