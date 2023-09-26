@@ -82,25 +82,23 @@ Start Procchi configured to update every 10 seconds (instead of the default of 5
 
 ## Develop
 
-If you are on a Unix/MacOS system with `bun` installed, you can run:
+To build a release:
 ```sh
+# If you have "bun" installed
 bun run start:bun
-```
 
-which will build and run Procchi in debug mode. Otherwise, you can run:
-```sh
+# Otherwise
 npm run start
 ```
 
 ## Build
 
-If you are on a Unix/MacOS system with `bun` installed, you can run:
+To build a release:
 ```sh
+# If you have "bun" installed
 bun run build:bun
-```
 
-which will build a Procchi release. Otherwise, you can run:
-```sh
+# Otherwise
 npm run build
 ```
 
