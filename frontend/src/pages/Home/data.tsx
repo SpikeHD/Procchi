@@ -51,6 +51,8 @@ export function DataHome(props: Props) {
               )}
               xLabel="Time"
               yLabel="Memory Usage (MB)"
+              max={sysinfo.mem_size / 1024 / 1024}
+              min={0}
               datasets={[
                 {
                   data: memoryData.map((v) => {
@@ -126,6 +128,7 @@ export function DataHome(props: Props) {
               )}
               xLabel="Time"
               yLabel="Network Usage (MB)"
+              min={0}
               datasets={Object.keys(networkData).map((network, i) => {
                 return {
                   data: networkData[network].map((v) => {

@@ -32,14 +32,14 @@ export function QuickStats(props: Props) {
         <div className="stat">
           <span className="stat-big">{bytesToReadable(memoryUse)}</span>
           <span className="stat-small">{
-            (memoryUse / props.sysinfo.mem_size * 100).toFixed(2)
+            ((memoryUse / props.sysinfo.mem_size * 100) || 0).toFixed(2)
           }% of total memory ({bytesToReadable(props.sysinfo.mem_size)})</span>
         </div>
 
         <div className="stat">
           <span className="stat-big">{bytesToReadable(swapUse)}</span>
           <span className="stat-small">{
-            (swapUse / props.sysinfo.swap_size * 100).toFixed(2)
+            ((swapUse / props.sysinfo.swap_size * 100) || 0).toFixed(2)
           }% of total swap ({bytesToReadable(props.sysinfo.swap_size)})</span>
         </div>
 
