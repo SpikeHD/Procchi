@@ -115,7 +115,10 @@ impl ResourceWatcher {
       available,
     });
 
-    if mem_history.len() > self.mem_history_max {
+    // The difference between the first elm and the last elm is more than the max
+    // history, remove the first elm
+    if is_past_max(mem_history.get(0).unwrap().timestamp, mem_history.last().unwrap().timestamp, self.mem_history_max as u64)
+    {
       mem_history.remove(0);
     }
 
@@ -126,7 +129,8 @@ impl ResourceWatcher {
       available: swap_free,
     });
 
-    if swap_history.len() > self.mem_history_max {
+    if is_past_max(swap_history.get(0).unwrap().timestamp, swap_history.last().unwrap().timestamp, self.mem_history_max as u64)
+    {
       swap_history.remove(0);
     }
 
@@ -142,7 +146,8 @@ impl ResourceWatcher {
       used: cpu_use_avg / system.cpus().len() as f32,
     });
 
-    if cpu_history.len() > self.cpu_history_max {
+    if is_past_max(cpu_history.get(0).unwrap().timestamp, cpu_history.last().unwrap().timestamp, self.cpu_history_max as u64)
+    {
       cpu_history.remove(0);
     }
 
@@ -162,7 +167,8 @@ impl ResourceWatcher {
         used: disk.total_space() - disk.available_space(),
       });
 
-      if disk_vec.len() > self.mem_history_max {
+      if is_past_max(disk_vec.get(0).unwrap().timestamp, disk_vec.last().unwrap().timestamp, self.mem_history_max as u64)
+      {
         disk_vec.remove(0);
       }
     }
@@ -180,6 +186,11 @@ impl ResourceWatcher {
         recieve: data.received(),
         transmit: data.transmitted(),
       });
+
+      if is_past_max(network_vec.get(0).unwrap().timestamp, network_vec.last().unwrap().timestamp, self.mem_history_max as u64)
+      {
+        network_vec.remove(0);
+      }
     }
 
     // Clear the old process list
@@ -194,4 +205,8 @@ impl ResourceWatcher {
       });
     }
   }
+}
+
+fn is_past_max(first_timestamp: u64, last_timestamp: u64, max: u64) -> bool {
+  first_timestamp - last_timestamp > max
 }
