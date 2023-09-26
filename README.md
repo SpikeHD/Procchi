@@ -82,7 +82,7 @@ Start Procchi configured to update every 10 seconds (instead of the default of 5
 
 ## Develop
 
-To build a release:
+To start in dev mode:
 ```sh
 # If you have "bun" installed
 bun run start:bun
