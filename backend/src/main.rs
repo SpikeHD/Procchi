@@ -54,13 +54,9 @@ struct Args {
   #[arg(short, long, default_value = "6565")]
   port: u16,
 
-  /// Max amount of memory history to keep at once
-  #[arg(short, long, default_value = "5m")]
-  mem_history_max: String,
-
-  /// Max amount of CPU history to keep at once
-  #[arg(short, long, default_value = "5m")]
-  cpu_history_max: String,
+  /// Max amount of history to keep at once for each metric
+  #[arg(short, long, default_value = "100")]
+  history_max: usize,
 
   /// Rate (in seconds) at which to update the resource monitor
   #[arg(short = 'r', long, default_value = "5")]
@@ -135,15 +131,13 @@ fn main() {
   web::api::register_routes(
     &mut app,
     web::api::ApiSettings {
-      mem_history_max: util::relative_to_seconds(args.mem_history_max.clone()),
-      cpu_history_max: util::relative_to_seconds(args.cpu_history_max.clone()),
+      history_max: args.history_max,
       update_rate: args.update_rate,
     },
   );
 
   println!("Starting server on port {}...", args.port);
-  println!("Retaining {} of memory history", args.mem_history_max);
-  println!("Retaining {} of CPU history", args.cpu_history_max);
+  println!("Retaining {} elements of metric history", args.history_max);
   println!("Updating every {} seconds", args.update_rate);
   println!(
     "Done! Access the web interface at http://{}:{}/",

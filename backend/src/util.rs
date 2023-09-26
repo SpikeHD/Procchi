@@ -1,5 +1,5 @@
 // Convert times like 10m or 10h to seconds
-pub fn relative_to_seconds(rel: impl AsRef<str>) -> u64 {
+pub fn _relative_to_seconds(rel: impl AsRef<str>) -> u64 {
   let rel = rel.as_ref();
   let chars = rel.chars();
   let mut num = String::new();

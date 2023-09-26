@@ -4,8 +4,7 @@ use sysinfo::{CpuExt, System, SystemExt};
 use crate::{resource_watcher::ResourceWatcher, State};
 
 pub struct ApiSettings {
-  pub mem_history_max: u64,
-  pub cpu_history_max: u64,
+  pub history_max: usize,
   pub update_rate: u64,
 }
 

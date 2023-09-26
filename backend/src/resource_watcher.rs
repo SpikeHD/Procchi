@@ -52,8 +52,7 @@ pub struct ResourceWatcher {
   pub cpu_history: Arc<Mutex<Vec<Cpu>>>,
   pub disks: Arc<Mutex<HashMap<String, Vec<DiskUsage>>>>,
   pub network: Arc<Mutex<HashMap<String, Vec<NetworkUsage>>>>,
-  pub mem_history_max: usize,
-  pub cpu_history_max: usize,
+  pub history_max: usize,
   pub process_list: Arc<Mutex<Vec<Process>>>,
   system: Arc<Mutex<System>>,
 }
@@ -67,8 +66,7 @@ impl ResourceWatcher {
       cpu_history: Arc::new(Mutex::new(Vec::new())),
       disks: Arc::new(Mutex::new(HashMap::new())),
       network: Arc::new(Mutex::new(HashMap::new())),
-      mem_history_max: settings.mem_history_max as usize,
-      cpu_history_max: settings.cpu_history_max as usize,
+      history_max: settings.history_max as usize,
       process_list: Arc::new(Mutex::new(Vec::new())),
       system: Arc::new(Mutex::new(System::new_all())),
     }
@@ -117,8 +115,7 @@ impl ResourceWatcher {
 
     // The difference between the first elm and the last elm is more than the max
     // history, remove the first elm
-    if is_past_max(mem_history.get(0).unwrap().timestamp, mem_history.last().unwrap().timestamp, self.mem_history_max as u64)
-    {
+    if mem_history.len() > self.history_max as usize {
       mem_history.remove(0);
     }
 
@@ -129,8 +126,7 @@ impl ResourceWatcher {
       available: swap_free,
     });
 
-    if is_past_max(swap_history.get(0).unwrap().timestamp, swap_history.last().unwrap().timestamp, self.mem_history_max as u64)
-    {
+    if swap_history.len() > self.history_max as usize {
       swap_history.remove(0);
     }
 
@@ -146,8 +142,7 @@ impl ResourceWatcher {
       used: cpu_use_avg / system.cpus().len() as f32,
     });
 
-    if is_past_max(cpu_history.get(0).unwrap().timestamp, cpu_history.last().unwrap().timestamp, self.cpu_history_max as u64)
-    {
+    if cpu_history.len() > self.history_max as usize {
       cpu_history.remove(0);
     }
 
@@ -167,8 +162,7 @@ impl ResourceWatcher {
         used: disk.total_space() - disk.available_space(),
       });
 
-      if is_past_max(disk_vec.get(0).unwrap().timestamp, disk_vec.last().unwrap().timestamp, self.mem_history_max as u64)
-      {
+      if disk_vec.len() > self.history_max as usize {
         disk_vec.remove(0);
       }
     }
@@ -187,8 +181,7 @@ impl ResourceWatcher {
         transmit: data.transmitted(),
       });
 
-      if is_past_max(network_vec.get(0).unwrap().timestamp, network_vec.last().unwrap().timestamp, self.mem_history_max as u64)
-      {
+      if network_vec.len() > self.history_max as usize {
         network_vec.remove(0);
       }
     }
@@ -205,8 +198,4 @@ impl ResourceWatcher {
       });
     }
   }
-}
-
-fn is_past_max(first_timestamp: u64, last_timestamp: u64, max: u64) -> bool {
-  first_timestamp - last_timestamp > max
 }
