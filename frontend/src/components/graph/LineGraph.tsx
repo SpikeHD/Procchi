@@ -21,6 +21,7 @@ interface Props {
 }
 
 export function LineGraph(props: Props) {
+  const color = getComputedStyle(document.documentElement).getPropertyValue('--graph-color')
   const [data, setData] = useState({
     labels: props.labels,
     datasets: props.datasets.map((dataset) => {
@@ -47,6 +48,22 @@ export function LineGraph(props: Props) {
         }
       })
     })
+
+    // Listen to rerender-graphs event
+    document.addEventListener('rerender-graphs', () => {
+      setData({
+        labels: props.labels,
+        datasets: props.datasets.map((dataset) => {
+          return {
+            label: dataset.label,
+            data: dataset.data,
+            fill: true,
+            backgroundColor: dataset.backgroundColor,
+            borderColor: dataset.color
+          }
+        })
+      })
+    })
   }, [props.datasets])
 
   return (
@@ -57,17 +74,36 @@ export function LineGraph(props: Props) {
           animation: false,
           maintainAspectRatio: false,
           responsive: true,
+          color: color,
+          backgroundColor: color,
+          borderColor: color,
           scales: {
             x: {
               title: {
                 display: props.xLabel !== undefined,
-                text: props.xLabel
+                text: props.xLabel,
+                color: color,
+              },
+              grid: {
+                color: color,
+                tickColor: color,
+              },
+              ticks: {
+                color: color,
               },
             },
             y: {
               title: {
                 display: props.yLabel !== undefined,
-                text: props.yLabel
+                text: props.yLabel,
+                color: color,
+              },
+              grid: {
+                color: color,
+                tickColor: color,
+              },
+              ticks: {
+                color: color,
               },
               suggestedMin: props.min || null,
               suggestedMax: props.max || null,

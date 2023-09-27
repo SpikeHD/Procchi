@@ -1,4 +1,4 @@
-:root {
+html {
   --background: #fbfefb;
   --text-primary: var(--background);
   --text-secondary: #092207;
@@ -6,6 +6,22 @@
   --color-secondary: #efc3ef;
   --color-accent: #c832c8;
   --color-hover: #e0e4e1;
+  --graph-color: #666666;
+
+  /* Material Design stuff */
+  --mdc-theme-primary: #c832c8;
+  --mdc-theme-secondary: #efc3ef;
+}
+
+html.theme-dark {
+  --background: #3d3d3d;
+  --text-primary: var(--background);
+  --text-secondary: #fbfefb;
+  --color-primary: rgba(255, 99, 132, 0.6);
+  --color-secondary: #efc3ef;
+  --color-accent: #c832c8;
+  --color-hover: #474747;
+  --graph-color: #afafaf;
 }
 
 body {
@@ -44,6 +60,26 @@ main,
   height: 32px;
 
   margin: 10px
+}
+
+.header-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  
+  width: 50%;
+  height: 100%;
+}
+
+.header-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 49%;
+  height: 100%;
 }
 
 #header img {

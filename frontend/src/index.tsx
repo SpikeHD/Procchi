@@ -5,16 +5,23 @@ import { Home } from './pages/Home/index.jsx'
 import { NotFound } from './pages/_404.jsx'
 
 import './style.css'
+
 import ProcchiIcon from './assets/procchi_icon.png'
+import { ThemeSwitch } from './components/ThemeSwitch.js'
 
 export function App() {
   return (
     <div id="root">
       <div id="header">
-        <img src={ProcchiIcon} className="icon" />
-        <span className="title">
-          Procchi
-        </span>
+        <div className="header-title">
+          <img src={ProcchiIcon} className="icon" />
+          <span className="title">
+            Procchi
+          </span>
+        </div>
+        <div className="header-controls">
+          <ThemeSwitch />
+        </div>
       </div>
 
       <LocationProvider>

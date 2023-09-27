@@ -1,0 +1,15 @@
+.theme-switch {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.theme-icon {
+  display: flex;
+  align-items: center;
+
+  padding: 20px;
+}

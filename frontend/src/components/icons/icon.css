@@ -1,4 +1,6 @@
 .icon {
   display: inline-block;
   height: 20px;
+
+  fill: var(--text-secondary);
 }
