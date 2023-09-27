@@ -1,34 +1,43 @@
-import Switch from 'preact-material-components/Switch'
-
 import './ThemeSwitch.css'
 import 'preact-material-components/Switch/style.css'
 import { MoonIcon } from './icons/MoonIcon'
 import { SunIcon } from './icons/SunIcon'
-import { useState } from 'preact/hooks'
-
+import { useEffect, useState } from 'preact/hooks'
 export function ThemeSwitch() {
   const [darkMode, setDarkMode] = useState(false)
 
+  useEffect(() => {
+    // Read theme from local storage
+    const dark = localStorage.getItem('dark')
+
+    if (dark && dark === 'true') {
+      toggleTheme()
+    }
+  }, [])
+
+  function toggleTheme() {
+    const dark = !darkMode
+    setDarkMode(dark)
+
+    // Set theme
+    if (dark) {
+      document.documentElement.classList.add('theme-dark')
+    } else {
+      document.documentElement.classList.remove('theme-dark')
+    }
+
+    // Send "rerender graphs" event
+    document.dispatchEvent(new Event('rerender-graphs'))
+
+    // Save to local storage
+    localStorage.setItem('dark', dark.toString())
+  }
+
   return (
     <div className="theme-switch">
-      <div className="theme-icon">
-        {
-          darkMode ? (
-            <MoonIcon />
-          ) : (
-            <SunIcon />
-          )
-        }
+      <div className="theme-icon" onClick={toggleTheme}>
+        {darkMode ? <SunIcon /> : <MoonIcon />}
       </div>
-      <Switch
-        onClick={() => {
-          setDarkMode(!darkMode)
-          document.documentElement.classList.toggle('theme-dark')
-
-          // Send "rerender graphs" event
-          document.dispatchEvent(new Event('rerender-graphs'))
-        }}
-      />
     </div>
   )
 }

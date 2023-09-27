@@ -11,7 +11,6 @@
     "chart.js": "^4.4.0",
     "preact": "^10.13.1",
     "preact-iso": "^2.3.1",
-    "preact-material-components": "^1.6.1",
     "preact-render-to-string": "^6.2.1",
     "react-chartjs-2": "^5.2.0"
   },

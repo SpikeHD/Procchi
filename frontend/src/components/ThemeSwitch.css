@@ -13,3 +13,12 @@
 
   padding: 20px;
 }
+
+.theme-icon .icon {
+  height: 28px;
+  fill: var(--text-secondary);
+}
+
+.theme-icon:hover {
+  cursor: pointer;
+}
