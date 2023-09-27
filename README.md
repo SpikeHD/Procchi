@@ -26,6 +26,7 @@
 
 # Table of Contents
 
+* [Screenshots](#screenshots)
 * [Installation](#installation)
 * [Usage](#usage)
   * [Examples](#examples)
@@ -34,9 +35,15 @@
   * [First Time Setup](#first-time-setup)
   * [Develop](#develop)
   * [Build](#build)
-* [Screenshots](#screenshots)
 * [TODO](#todo)
 * [Contributing](#contributing)
+
+# Screenshots
+
+<details>
+  <summary>Click to expand</summary>
+  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/6ae92787-b3df-4522-a657-ad79d99c626f">
+</details>
 
 # Installation
 
@@ -112,13 +119,6 @@ bun run build:bun
 # Otherwise
 npm run build
 ```
-
-# Screenshots
-
-<details>
-  <summary>Click to expand</summary>
-  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/6ae92787-b3df-4522-a657-ad79d99c626f">
-</details>
 
 # TODO
 
