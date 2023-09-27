@@ -1,7 +1,9 @@
 <div align=center>
-  <h1>Procchi</h1>
-  <p>Stupid simple, in-memory process monitoring, acessible from the web.</p>
-  <a href="https://www.discord.gg/agQ9mRdHMZ">https://discord.gg/agQ9mRdHMZ</a>
+  <h1>
+    <img height="64px" src="frontend/src/assets/procchi_icon.png" />
+    <br />
+    Procchi
+  </h1>
 </div>
 
 <div align="center">
@@ -14,6 +16,13 @@
  <img src="https://img.shields.io/github/release-date/SpikeHD/procchi" />
  <img src="https://img.shields.io/github/stars/SpikeHD/procchi" />
 </div>
+
+<div align="center">
+  Stupid simple, in-memory process monitoring, acessible from the web.
+  <br />
+  https://discord.gg/agQ9mRdHMZ
+</div>
+
 
 # Table of Contents
 
