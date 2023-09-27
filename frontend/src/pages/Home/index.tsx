@@ -34,20 +34,20 @@ export function Home() {
       const ddata = await dres.json()
       setDiskData(ddata)
 
+      const nres = await fetch('/api/network')
+      const ndata = await nres.json()
+      setNetworkData(ndata)
+
       if (firstTime) {
         // Also create colors
         setDiskColors(Object.keys(ddata).map(() => {
           return randomRGBAColors()
         }))
 
-        setNetworkColors(Object.keys(ddata).map(() => {
+        setNetworkColors(Object.keys(ndata).map(() => {
           return randomRGBAColors()
         }))
       }
-
-      const nres = await fetch('/api/network')
-      const ndata = await nres.json()
-      setNetworkData(ndata)
 
       const pres = await fetch('/api/processes')
       const pdata = await pres.json()
