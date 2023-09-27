@@ -60,7 +60,7 @@
 }
 
 .process-table .process-table-row:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--color-hover);
 }
 
 .process-table-header {
@@ -73,7 +73,7 @@
 }
 
 .process-table-header .process-table-cell:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--color-hover);
 }
 
 .short {

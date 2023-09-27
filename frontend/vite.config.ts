@@ -9,7 +9,5 @@ export default defineConfig({
       react: 'preact/compat',
       'react-dom': 'preact/compat'
     }
-  },
-  // Move favicon to dist/
-  assetsInclude: './assets/favicon.ico'
+  }
 })
