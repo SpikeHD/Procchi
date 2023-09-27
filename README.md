@@ -117,8 +117,7 @@ npm run build
 
 <details>
   <summary>Click to expand</summary>
-  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/307da6cb-80d7-4004-adfc-e3182c9d046c">
-
+  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/6ae92787-b3df-4522-a657-ad79d99c626f">
 </details>
 
 # TODO
