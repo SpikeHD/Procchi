@@ -1,5 +1,4 @@
 import './ThemeSwitch.css'
-import 'preact-material-components/Switch/style.css'
 import { MoonIcon } from './icons/MoonIcon'
 import { SunIcon } from './icons/SunIcon'
 import { useEffect, useState } from 'preact/hooks'
