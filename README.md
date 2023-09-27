@@ -1,6 +1,6 @@
 <div align=center>
   <h1>
-    <img height="64px" src="frontend/src/assets/procchi_icon.png" />
+    <img height="100px" src="frontend/src/assets/procchi_icon.png" />
     <br />
     Procchi
   </h1>
