@@ -54,3 +54,21 @@
   font-size: 14px;
   font-weight: normal;
 }
+
+.network-stat {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.network-stat span {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.stat-seperator {
+ padding: 4px;
+}

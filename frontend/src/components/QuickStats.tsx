@@ -56,8 +56,16 @@ export function QuickStats(props: Props) {
         </div>
 
         <div className="stat">
-          <span className="stat-big">
-            {bytesToReadable(netRecieve)} <ArrowDown /> / {bytesToReadable(netTransmit)} <ArrowUp />
+          <span className="stat-big network-stat">
+            <span>
+              {bytesToReadable(netRecieve)} <ArrowDown />  
+            </span>
+            <span className="stat-seperator">
+              /
+            </span> 
+            <span>
+              {bytesToReadable(netTransmit)} <ArrowUp />
+            </span>
           </span>
           <span className="stat-small">Network RX / TX ({props.networkData.length} devices)</span>
         </div>

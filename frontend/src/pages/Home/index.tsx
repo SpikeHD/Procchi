@@ -14,6 +14,7 @@ export function Home() {
   const [networkData, setNetworkData] = useState([] as Network[])
   const [processList, setProcessList] = useState([] as Process[])
   const [diskColors, setDiskColors] = useState([] as { color: string, backgroundColor: string }[])
+  const [networkColors, setNetworkColors] = useState([] as { color: string, backgroundColor: string }[])
 
   useEffect(() => {
     async function grabLatestData(firstTime = false) {
@@ -34,8 +35,12 @@ export function Home() {
       setDiskData(ddata)
 
       if (firstTime) {
-        // Also create disk colors
+        // Also create colors
         setDiskColors(Object.keys(ddata).map(() => {
+          return randomRGBAColors()
+        }))
+
+        setNetworkColors(Object.keys(ddata).map(() => {
           return randomRGBAColors()
         }))
       }
@@ -86,6 +91,7 @@ export function Home() {
                 networkData={networkData}
                 processList={processList}
                 diskColors={diskColors}
+                networkColors={networkColors}
               />
             </div>
           </>

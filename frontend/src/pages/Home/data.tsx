@@ -14,6 +14,7 @@ interface Props {
   networkData: Network[];
   processList: Process[];
   diskColors: { color: string; backgroundColor: string }[];
+  networkColors: { color: string; backgroundColor: string }[];
 }
 
 export function DataHome(props: Props) {
@@ -27,6 +28,9 @@ export function DataHome(props: Props) {
   const [diskColors, setDiskColors] = useState(
     [] as { color: string; backgroundColor: string }[]
   )
+  const [networkColors, setNetworkColors] = useState(
+    [] as { color: string; backgroundColor: string }[]
+  )
 
   useEffect(() => {
     setSysinfo(props.sysinfo)
@@ -37,6 +41,7 @@ export function DataHome(props: Props) {
     setNetworkData(props.networkData)
     setProcessList(props.processList)
     setDiskColors(props.diskColors)
+    setNetworkColors(props.networkColors)
   }, [props])
 
   return (
@@ -145,8 +150,10 @@ export function DataHome(props: Props) {
                   }),
                   label:
                     network === '' ? 'Unknown Network ' + i : network.trim(),
-                  color: 'rgba(255, 99, 132, 0.6)',
-                  backgroundColor: 'rgb(255, 99, 132, 0.2)',
+                  color: networkColors[i]?.color || 'rgba(255, 99, 132, 0.6)',
+                  backgroundColor:
+                    networkColors[i]?.backgroundColor ||
+                    'rgb(255, 99, 132, 0.2)',
                 }
               })}
             />

@@ -94,6 +94,8 @@ impl ResourceWatcher {
     system.refresh_cpu();
     system.refresh_memory();
     system.refresh_processes();
+    system.refresh_networks();
+    system.refresh_disks();
 
     let mem = system.total_memory();
     let free = system.free_memory();
