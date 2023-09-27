@@ -59,8 +59,12 @@
   width: 100%;
 }
 
-.process-table-row:hover {
-  background-color: rgba(0, 0, 0, 0.1)
+.process-table .process-table-row:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.process-table-header .process-table-cell:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .short {
