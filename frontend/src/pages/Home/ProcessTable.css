@@ -63,6 +63,15 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.process-table-header {
+  padding: 0;
+}
+
+.process-table-header .process-table-cell {
+  margin: 0;
+  padding: 0;
+}
+
 .process-table-header .process-table-cell:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
