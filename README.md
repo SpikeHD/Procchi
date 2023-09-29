@@ -124,7 +124,7 @@ npm run build
 
 * [ ] Better mobile formatting
 * [ ] "Plugins" for specific process types
-  * [ ] Minecraft Server(s)
+  * [x] Minecraft Server(s)
   * [ ] Docker containers
   * [ ] Logs (nginx, apache, syslog, etc.)
 
