@@ -5,6 +5,8 @@
     "start:bun": "cd ./frontend && bun run build && cd ../backend && cargo run -- -u test -k test",
     "start": "cd ./frontend && npm run build && cd ../backend && cargo run -- -u test -k test",
     "build:bun": "cd ./frontend && bun run build && cd ../backend && cargo build --release",
-    "build": "cd ./frontend && npm run build && cd ../backend && cargo build --release"
+    "build": "cd ./frontend && npm run build && cd ../backend && cargo build --release",
+    "clippy:fix": "cd ./backend && cargo clippy --fix",
+    "fmt:fix": "cd ./backend && cargo fmt"
   }
 }
