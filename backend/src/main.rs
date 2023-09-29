@@ -7,8 +7,11 @@ use std::{io::Write, path::Path};
 use tide::utils::async_trait;
 use tide_http_auth::{BasicAuthRequest, Storage};
 
+use crate::plugins::parse_enable_plugins;
+
 mod resource_watcher;
 mod util;
+mod plugins;
 mod web;
 
 static FRONTEND_DIR: Dir = include_dir!("../frontend/dist");
@@ -50,7 +53,7 @@ impl Storage<User, BasicAuthRequest> for State {
 /// Resource monitor, entirely accessible from the web
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
-struct Args {
+pub struct Args {
   #[arg(short, long, default_value = "6565")]
   port: u16,
 
@@ -73,6 +76,10 @@ struct Args {
   /// Access address
   #[arg(short = 'a', long, default_value = "127.0.0.1")]
   address: String,
+
+  /// Plugins to enable, seperated by commas (eg. minecraft,docker)
+  #[arg(short = 'e', long)]
+  plugins: Option<String>,
 }
 
 fn main() {
@@ -135,6 +142,9 @@ fn main() {
       update_rate: args.update_rate,
     },
   );
+
+  // Register plugins
+  parse_enable_plugins(&mut app, args.plugins.clone(), args.address.clone());
 
   println!("Starting server on port {}...", args.port);
   println!("Retaining {} elements of metric history", args.history_max);

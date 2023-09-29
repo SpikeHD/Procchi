@@ -9,6 +9,7 @@ edition = "2021"
 async-std = "1.12.0"
 clap = { version = "4.3.21", features = ["derive"] }
 include_dir = "0.7.3"
+mcping = "0.2.0"
 mime_guess = "2.0.4"
 rpassword = "7.2.0"
 serde = "1.0.188"
