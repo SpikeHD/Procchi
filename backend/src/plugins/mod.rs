@@ -1,5 +1,5 @@
-use serde::Serialize;
 use crate::State;
+use serde::Serialize;
 
 mod minecraft;
 
@@ -11,7 +11,11 @@ struct Plugin {
 
 static mut PLUGINS: Vec<Plugin> = vec![];
 
-pub fn parse_enable_plugins(app: &mut tide::Server<State>, plugins: Option<String>, address: String) {
+pub fn parse_enable_plugins(
+  app: &mut tide::Server<State>,
+  plugins: Option<String>,
+  address: String,
+) {
   if plugins.is_none() {
     return;
   }
@@ -28,7 +32,9 @@ pub fn parse_enable_plugins(app: &mut tide::Server<State>, plugins: Option<Strin
   for plugin in plugins {
     let endpoints = match plugin {
       "minecraft" => minecraft::register(app, address.clone()),
-      _ => {vec![]}
+      _ => {
+        vec![]
+      }
     };
 
     for endpoint in endpoints {

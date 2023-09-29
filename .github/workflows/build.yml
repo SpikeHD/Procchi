@@ -26,6 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [windows-latest, ubuntu-latest, macos-latest]
+        feature: ["--no-default-features", "--all-features"]
 
     steps:
       - uses: oven-sh/setup-bun@v1
@@ -50,22 +51,22 @@ jobs:
 
       - name: Build
         if: matrix.platform != 'windows-latest'
-        run: bun run build:bun
+        run: cd ./frontend && bun run build && cd ../backend && cargo build --release ${{ matrix.feature }}
 
       - name: Build (Windows)
         if: matrix.platform == 'windows-latest'
-        run: npm run build
+        run: cd ./frontend && npm run build && cd ../backend && cargo build --release ${{ matrix.feature }}
 
       - name: Upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: matrix.platform != 'windows-latest'
         with:
-          name: procchi_${{ matrix.platform }}
+          name: procchi-${{ matrix.platform }}-${{ matrix.feature == '--no-default-features' && 'minimal' || 'all-features' }}
           path: backend/target/release/procchi
 
       - name: Upload (Windows)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: matrix.platform == 'windows-latest'
         with:
-          name: procchi_${{ matrix.platform }}
+          name: procchi-${{ matrix.platform }}-${{ matrix.feature == '--no-default-features' && 'minimal' || 'all-features' }}
           path: backend/target/release/procchi.exe
