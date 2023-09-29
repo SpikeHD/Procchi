@@ -30,7 +30,7 @@
 * [Installation](#installation)
 * [Usage](#usage)
   * [Examples](#examples)
-* [Development](#development)
+* [Developing](#developing)
   * [Prerequisites](#prerequisites)
   * [First Time Setup](#first-time-setup)
   * [Develop](#develop)
@@ -42,7 +42,8 @@
 
 <details>
   <summary>Click to expand</summary>
-  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/6ae92787-b3df-4522-a657-ad79d99c626f">
+  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/e06f567f-86f2-4fb7-a375-c4b65a448288">
+  <img width="1676" alt="image" src="https://github.com/SpikeHD/Procchi/assets/25207995/ebcd8917-c323-4778-96a1-fa04380dab41">
 </details>
 
 # Installation
