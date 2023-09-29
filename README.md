@@ -18,7 +18,7 @@
 </div>
 
 <div align="center">
-  Stupid simple, in-memory process monitoring, accessible from the web.
+  Stupid simple, in-memory system monitoring, accessible from the web.
   <br />
   https://discord.gg/agQ9mRdHMZ
 </div>
