@@ -7,12 +7,15 @@ use std::{io::Write, path::Path};
 use tide::utils::async_trait;
 use tide_http_auth::{BasicAuthRequest, Storage};
 
+#[cfg(feature = "plugins")]
 use crate::plugins::parse_enable_plugins;
 
 mod resource_watcher;
 mod util;
-mod plugins;
 mod web;
+
+#[cfg(feature = "plugins")]
+mod plugins;
 
 static FRONTEND_DIR: Dir = include_dir!("../frontend/dist");
 
@@ -144,6 +147,7 @@ fn main() {
   );
 
   // Register plugins
+  #[cfg(feature = "plugins")]
   parse_enable_plugins(&mut app, args.plugins.clone(), args.address.clone());
 
   println!("Starting server on port {}...", args.port);
