@@ -20,7 +20,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: '20'
@@ -31,7 +31,7 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Build frontend (sicne it's required to compile)
+      - name: Build frontend (since it's required to compile)
         run: |
           cd frontend
           npm install
