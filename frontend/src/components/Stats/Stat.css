@@ -1,0 +1,41 @@
+
+.stat-mini {
+  font-size: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.stat-big {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.stat-small {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.network-stat {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.network-stat span {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.stat-seperator {
+ padding: 4px;
+}

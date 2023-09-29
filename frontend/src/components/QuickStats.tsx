@@ -1,5 +1,7 @@
 import { bytesToReadable } from '../util/byte'
 import './QuickStats.css'
+import { Stat } from './Stats/Stat'
+import { StatRow } from './Stats/StatRow'
 import { ArrowDown } from './icons/ArrowDown'
 import { ArrowUp } from './icons/ArrowUp'
 
@@ -18,45 +20,44 @@ export function QuickStats(props: Props) {
   const swapUse = props.swapData[props.swapData.length - 1]?.used
   const diskUse = Object.keys(props.diskData).map(d => props.diskData[d][props.diskData[d].length - 1].used).reduce((a, b) => a + b)
   const diskTotal = Object.keys(props.diskData).map(d => props.diskData[d][props.diskData[d].length - 1].total).reduce((a, b) => a + b)
+  const diskDeviceCount = Object.keys(props.diskData).length
   const netRecieve = Object.keys(props.networkData).map(n => props.networkData[n][props.networkData[n].length - 1].recieve).reduce((a, b) => a + b)
   const netTransmit = Object.keys(props.networkData).map(n => props.networkData[n][props.networkData[n].length - 1].transmit).reduce((a, b) => a + b)
+  const netDeviceCount = Object.keys(props.networkData).length
   const cpuPct = props.cpuData[props.cpuData.length - 1]?.used
 
   return (
-    <div className="quick-stats-outer">
-      <div className="quick-stats-header">
-        <span className="quick-stats-title">Quick Stats</span>
-      </div>
+    <StatRow header={'Quick Stats'}>
+      <Stat
+        big={bytesToReadable(memoryUse)}
+        small={
+          ((memoryUse / props.sysinfo.mem_size * 100) || 0).toFixed(2) + '% of total memory (' + bytesToReadable(props.sysinfo.mem_size) + ')'
+        }
+      />
 
-      <div className="quick-stats">
-        <div className="stat">
-          <span className="stat-big">{bytesToReadable(memoryUse)}</span>
-          <span className="stat-small">{
-            ((memoryUse / props.sysinfo.mem_size * 100) || 0).toFixed(2)
-          }% of total memory ({bytesToReadable(props.sysinfo.mem_size)})</span>
-        </div>
+      <Stat
+        big={bytesToReadable(swapUse)}
+        small={
+          ((swapUse / props.sysinfo.swap_size * 100) || 0).toFixed(2) + '% of total swap (' + bytesToReadable(props.sysinfo.swap_size) + ')'
+        }
+      />
 
-        <div className="stat">
-          <span className="stat-big">{bytesToReadable(swapUse)}</span>
-          <span className="stat-small">{
-            ((swapUse / props.sysinfo.swap_size * 100) || 0).toFixed(2)
-          }% of total swap ({bytesToReadable(props.sysinfo.swap_size)})</span>
-        </div>
+      <Stat
+        big={cpuPct.toFixed(2) + '%'}
+        small={
+          props.sysinfo.cpu_brand
+        }
+        mini={true}
+      />
 
-        <div className="stat">
-          <span className="stat-big">{cpuPct.toFixed(2)}%</span>
-          <span className="stat-small">
-            <span className="stat-mini">({props.sysinfo.cpu_brand})</span>
-          </span>
-        </div>
+      <Stat
+        big={props.processList.length.toString()}
+        small={'Active Processes'}
+      />
 
-        <div className="stat">
-          <span className="stat-big">{props.processList.length}</span>
-          <span className="stat-small">Active Processes</span>
-        </div>
-
-        <div className="stat">
-          <span className="stat-big network-stat">
+      <Stat
+        big={(
+          <span className="network-stat">
             <span>
               {bytesToReadable(netRecieve)} <ArrowDown />  
             </span>
@@ -67,17 +68,16 @@ export function QuickStats(props: Props) {
               {bytesToReadable(netTransmit)} <ArrowUp />
             </span>
           </span>
-          <span className="stat-small">Network RX / TX ({props.networkData.length} devices)</span>
-        </div>
+        )}
+        small={'Network RX / TX (' + netDeviceCount + ' devices)'}
+      />
 
-        <div className="stat">
-          <span className="stat-big">{bytesToReadable(diskUse)}</span>
-          <span className="stat-small">{
-            (diskUse / diskTotal * 100).toFixed(2)
-          }% of {props.diskData.length} disks</span>
-        </div>
-      </div>
-    </div>
-
+      <Stat
+        big={bytesToReadable(diskUse)}
+        small={
+          (diskUse / diskTotal * 100).toFixed(2) + '% of ' + diskDeviceCount + ' disks'
+        }
+      />
+    </StatRow>
   )
 }

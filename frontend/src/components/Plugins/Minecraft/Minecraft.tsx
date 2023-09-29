@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'preact/hooks'
+import { StatRow } from '../../Stats/StatRow'
+import { Stat } from '../../Stats/Stat'
+
 import './Minecraft.css'
 
 interface McData {
@@ -20,27 +23,26 @@ export function Minecraft() {
   }, [])
 
   return (
-    <div className="quick-stats-outer">
-      <div className="quick-stats-header">
-        <span className="quick-stats-title">Minecraft Server ({data.address})</span>
-      </div>
+    <StatRow header={`Minecraft Server (${data.address})`}>
+      <Stat
+        big={data.players.toString()}
+        small="Players Online"
+      />
 
-      <div className="quick-stats">
-        <div className="stat">
-          <span className="stat-big">{data.players}</span>
-          <span className="stat-small">Players Online</span>
-        </div>
+      <Stat
+        big={data.version}
+        small="Version"
+      />
 
-        <div className="stat">
-          <span className="stat-big">{data.version}</span>
-          <span className="stat-small">Version</span>
-        </div>
+      <Stat
+        big={data.latency + 'ms'}
+        small="Latency"
+      />
 
-        <div className="stat">
-          <span className="stat-big">{data.latency}ms</span>
-          <span className="stat-small">Latency</span>
-        </div>
-      </div>
-    </div>
+      <Stat
+        big={data.description}
+        small="Description"
+      />
+    </StatRow>
   )
 }
