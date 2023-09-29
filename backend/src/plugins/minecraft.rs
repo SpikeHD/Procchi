@@ -9,6 +9,7 @@ struct McData {
   players: i64,
   version: String,
   latency: u64,
+  address: String,
 }
 
 static mut ACCESS_ADDRESS: String = String::new();
@@ -32,6 +33,7 @@ pub async fn minecraft(_req: tide::Request<State>) -> Result<tide::Response, tid
     players: 0,
     version: String::from("Unknown"),
     latency: 0,
+    address: access_address.clone(),
   };
 
   let (latency, response) = match mcping::get_status(access_address.as_str(), None) {

@@ -4,6 +4,7 @@ import { QuickStats } from '../../components/QuickStats'
 import './style.css'
 import { randomRGBAColors } from '../../util/colors'
 import { DataHome } from './data'
+import PluginsSection from '../../components/Plugins/PluginsSection'
 
 export function Home() {
   const [sysinfo, setSysinfo] = useState({} as SystemInfo)
@@ -80,6 +81,8 @@ export function Home() {
               networkData={networkData}
               processList={processList}
             />
+
+            <PluginsSection />
 
             <div className="home-main">
               <DataHome
