@@ -13,7 +13,7 @@ struct McData {
 
 static mut ACCESS_ADDRESS: String = String::new();
 
-pub fn register(app: &mut tide::Server<State>, access_address: String) {
+pub fn register(app: &mut tide::Server<State>, access_address: String) -> Vec<String> {
   println!("Enabling Minecraft plugin");
 
   unsafe {
@@ -21,6 +21,8 @@ pub fn register(app: &mut tide::Server<State>, access_address: String) {
   }
 
   app.at("/api/minecraft").get(minecraft);
+
+  vec![String::from("/api/minecraft")]
 }
 
 pub async fn minecraft(_req: tide::Request<State>) -> Result<tide::Response, tide::Error> {
