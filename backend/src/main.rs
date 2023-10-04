@@ -5,9 +5,9 @@ use rpassword::read_password;
 use sha2::Digest;
 use std::{io::Write, path::Path};
 use tide::utils::async_trait;
-use tide_http_auth::{BasicAuthRequest, Storage};
-use tide_acme::{AcmeConfig, TideRustlsExt};
 use tide_acme::rustls_acme::caches::DirCache;
+use tide_acme::{AcmeConfig, TideRustlsExt};
+use tide_http_auth::{BasicAuthRequest, Storage};
 
 #[cfg(feature = "plugins")]
 use crate::plugins::parse_enable_plugins;
@@ -168,32 +168,36 @@ fn main() {
   parse_enable_plugins(&mut app, args.plugins.clone(), args.address.clone());
 
   if args.https {
-    logger::print_info(format!("Putting ACME cache in {}/.acme_cache", tmp_dir.display().to_string()));
+    logger::print_info(format!(
+      "Putting ACME cache in {}/.acme_cache",
+      tmp_dir.display()
+    ));
   }
 
   logger::print_info(format!("Starting server on port {}...", args.port));
-  logger::print_info(format!("Retaining {} elements of metric history", args.history_max));
+  logger::print_info(format!(
+    "Retaining {} elements of metric history",
+    args.history_max
+  ));
   logger::print_info(format!("Updating every {} seconds", args.update_rate));
-  logger::print_info(
-    format!(
-      "Done! Access the web interface at http{}://{}:{}/",
-      // Lol this is so dumb
-      if args.https { "s" } else { "" },
-      args.address,
-      args.port
-    )
-  );
+  logger::print_info(format!(
+    "Done! Access the web interface at http{}://{}:{}/",
+    // Lol this is so dumb
+    if args.https { "s" } else { "" },
+    args.address,
+    args.port
+  ));
 
   task::block_on(async {
     if args.https {
       app
-      .listen(
+        .listen(
           tide_rustls::TlsListener::build()
-          .acme(
-            AcmeConfig::new(vec![args.address.clone()])
-              .cache(DirCache::new(format!("{}/.acme_cache", tmp_dir.display().to_string())))
-          )
-          .addrs(format!("{}:{}", args.address.as_str(), args.port))
+            .acme(
+              AcmeConfig::new(vec![args.address.clone()])
+                .cache(DirCache::new(format!("{}/.acme_cache", tmp_dir.display()))),
+            )
+            .addrs(format!("{}:{}", args.address.as_str(), args.port)),
         )
         .await
         .unwrap();

@@ -1,7 +1,7 @@
 use mcping;
 use serde::Serialize;
 
-use crate::{State, logger};
+use crate::{logger, State};
 
 #[derive(Serialize, Clone)]
 struct McData {
