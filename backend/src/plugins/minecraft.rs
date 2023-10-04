@@ -1,7 +1,7 @@
 use mcping;
 use serde::Serialize;
 
-use crate::State;
+use crate::{State, logger};
 
 #[derive(Serialize, Clone)]
 struct McData {
@@ -15,7 +15,7 @@ struct McData {
 static mut ACCESS_ADDRESS: String = String::new();
 
 pub fn register(app: &mut tide::Server<State>, access_address: String) -> Vec<String> {
-  println!("Enabling Minecraft plugin");
+  logger::print_info("Enabling Minecraft plugin");
 
   unsafe {
     ACCESS_ADDRESS = access_address;

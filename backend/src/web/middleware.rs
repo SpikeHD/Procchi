@@ -1,6 +1,6 @@
 use tide::utils::async_trait;
 
-use crate::User;
+use crate::{User, logger};
 
 pub struct AuthMiddleware {}
 
@@ -14,7 +14,7 @@ where
       let mut res: tide::Response = tide::Response::new(401);
       res.insert_header("WWW-Authenticate", "Basic");
 
-      println!("Attempted access by {}", req.remote().unwrap_or("unknown"));
+      logger::print_info(format!("Attempted access by {}", req.remote().unwrap_or("unknown")));
 
       return Ok(res);
     }

@@ -2,8 +2,8 @@
   "name": "procchi",
   "version": "0.1.0",
   "scripts": {
-    "start:bun": "cd ./frontend && bun run build && cd ../backend && cargo run -- -u test -k test -s",
-    "start": "cd ./frontend && npm run build && cd ../backend && cargo run -- -u test -k test -s",
+    "start:bun": "cd ./frontend && bun run build && cd ../backend && cargo run -- -u test -k test",
+    "start": "cd ./frontend && npm run build && cd ../backend && cargo run -- -u test -k test",
     "build:bun": "cd ./frontend && bun run build && cd ../backend && cargo build --release",
     "build": "cd ./frontend && npm run build && cd ../backend && cargo build --release",
     "clippy:fix": "cargo clippy --manifest-path ./backend/Cargo.toml --all --fix",

@@ -1,6 +1,8 @@
 use crate::State;
 use serde::Serialize;
 
+use crate::logger;
+
 mod minecraft;
 
 #[derive(Serialize, Clone)]
@@ -38,7 +40,7 @@ pub fn parse_enable_plugins(
     };
 
     for endpoint in endpoints {
-      println!("Registered endpoint: {}", endpoint);
+      logger::print_info(format!("Registered endpoint: {}", endpoint));
       registered_endpoints.push(Plugin {
         name: plugin.to_string(),
         endpoints: vec![endpoint],

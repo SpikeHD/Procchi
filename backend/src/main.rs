@@ -12,6 +12,7 @@ use tide_acme::rustls_acme::caches::DirCache;
 #[cfg(feature = "plugins")]
 use crate::plugins::parse_enable_plugins;
 
+mod logger;
 mod resource_watcher;
 mod util;
 mod web;
@@ -89,6 +90,10 @@ pub struct Args {
   /// Enable HTTPS. Not really needed for testing locally, but recommended for outside access
   #[arg(short = 's', long)]
   https: bool,
+
+  /// Log file path
+  #[arg(short = 'l', long, default_value = "")]
+  log_file: String,
 }
 
 fn main() {
@@ -96,6 +101,11 @@ fn main() {
   let mut args = Args::parse();
   let mut username = String::new();
   let pwd;
+
+  // Init logger
+  if !args.log_file.is_empty() {
+    logger::init(args.log_file.clone());
+  }
 
   if args.username.is_none() || args.password.is_none() {
     // Prompt for username
@@ -157,15 +167,21 @@ fn main() {
   #[cfg(feature = "plugins")]
   parse_enable_plugins(&mut app, args.plugins.clone(), args.address.clone());
 
-  println!("Starting server on port {}...", args.port);
-  println!("Retaining {} elements of metric history", args.history_max);
-  println!("Updating every {} seconds", args.update_rate);
-  println!(
-    "Done! Access the web interface at http{}://{}:{}/",
-    // Lol this is so dumb
-    if args.https { "s" } else { "" },
-    args.address,
-    args.port
+  if args.https {
+    logger::print_info(format!("Putting ACME cache in {}/.acme_cache", tmp_dir.display().to_string()));
+  }
+
+  logger::print_info(format!("Starting server on port {}...", args.port));
+  logger::print_info(format!("Retaining {} elements of metric history", args.history_max));
+  logger::print_info(format!("Updating every {} seconds", args.update_rate));
+  logger::print_info(
+    format!(
+      "Done! Access the web interface at http{}://{}:{}/",
+      // Lol this is so dumb
+      if args.https { "s" } else { "" },
+      args.address,
+      args.port
+    )
   );
 
   task::block_on(async {
@@ -198,7 +214,7 @@ fn recursive_serve(app: &mut tide::Server<State>, path: Option<&Path>) {
   for file in dir.files() {
     let path = format!("{}", file.path().display());
 
-    println!("Serving {}", path);
+    logger::print_info(format!("Serving {}", path));
 
     app
       .at(&path)
