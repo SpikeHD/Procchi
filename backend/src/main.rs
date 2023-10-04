@@ -175,7 +175,7 @@ fn main() {
           tide_rustls::TlsListener::build()
           .acme(
             AcmeConfig::new(vec![args.address.clone()])
-              .cache(DirCache::new(format!("{:?}/.acme_cache", tmp_dir.display())))
+              .cache(DirCache::new(format!("{}/.acme_cache", tmp_dir.display().to_string())))
           )
           .addrs(format!("{}:{}", args.address.as_str(), args.port))
         )
