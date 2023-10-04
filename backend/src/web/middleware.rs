@@ -14,6 +14,8 @@ where
       let mut res: tide::Response = tide::Response::new(401);
       res.insert_header("WWW-Authenticate", "Basic");
 
+      println!("Attempted access by {}", req.remote().unwrap_or("unknown"));
+
       return Ok(res);
     }
 

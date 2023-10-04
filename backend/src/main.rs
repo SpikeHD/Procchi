@@ -6,6 +6,8 @@ use sha2::Digest;
 use std::{io::Write, path::Path};
 use tide::utils::async_trait;
 use tide_http_auth::{BasicAuthRequest, Storage};
+use tide_acme::{AcmeConfig, TideRustlsExt};
+use tide_acme::rustls_acme::caches::DirCache;
 
 #[cfg(feature = "plugins")]
 use crate::plugins::parse_enable_plugins;
@@ -83,9 +85,14 @@ pub struct Args {
   /// Plugins to enable, seperated by commas (eg. minecraft,docker)
   #[arg(short = 'e', long)]
   plugins: Option<String>,
+
+  /// Enable HTTPS. Not really needed for testing locally, but recommended for outside access
+  #[arg(short = 's', long)]
+  https: bool,
 }
 
 fn main() {
+  let tmp_dir = std::env::temp_dir();
   let mut args = Args::parse();
   let mut username = String::new();
   let pwd;
@@ -154,16 +161,33 @@ fn main() {
   println!("Retaining {} elements of metric history", args.history_max);
   println!("Updating every {} seconds", args.update_rate);
   println!(
-    "Done! Access the web interface at http://{}:{}/",
-    args.address, args.port
+    "Done! Access the web interface at http{}://{}:{}/",
+    // Lol this is so dumb
+    if args.https { "s" } else { "" },
+    args.address,
+    args.port
   );
 
   task::block_on(async {
-    app
-      .listen(format!("{}:{}", args.address, args.port))
-      .await
-      .unwrap();
-  })
+    if args.https {
+      app
+      .listen(
+          tide_rustls::TlsListener::build()
+          .acme(
+            AcmeConfig::new(vec![args.address.clone()])
+              .cache(DirCache::new(format!("{:?}/.acme_cache", tmp_dir.display())))
+          )
+          .addrs(format!("{}:{}", args.address.as_str(), args.port))
+        )
+        .await
+        .unwrap();
+    } else {
+      app
+        .listen(format!("{}:{}", args.address.as_str(), args.port))
+        .await
+        .unwrap();
+    }
+  });
 }
 
 fn recursive_serve(app: &mut tide::Server<State>, path: Option<&Path>) {
