@@ -29,6 +29,7 @@
 * [Screenshots](#screenshots)
 * [Installation](#installation)
 * [Usage](#usage)
+  * [Plugins](#plugins)
   * [Examples](#examples)
 * [Developing](#developing)
   * [Prerequisites](#prerequisites)
@@ -63,6 +64,16 @@ Run the binary via terminal to view a full list of options:
 ```sh
 ./procchi -h
 ```
+
+## Plugins
+
+Certain extra features need to be selectively enabled. For example, to enable the `minecraft` and `docker` plugins:
+
+```sh
+./procchi -e minecraft,docker
+```
+
+<i>Looking for a list of plugins that you can enable? Take a look <a href="https://github.com/SpikeHD/Procchi/blob/main/backend/src/plugins/mod.rs#L35">at this file.</a></i>
 
 ## Examples
 
