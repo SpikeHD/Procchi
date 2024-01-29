@@ -58,14 +58,14 @@ jobs:
         run: cd ./frontend && npm run build && cd ../backend && cargo build --release ${{ matrix.feature }}
 
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: matrix.platform != 'windows-latest'
         with:
           name: procchi-${{ matrix.platform }}-${{ matrix.feature == '--no-default-features' && 'minimal' || 'all-features' }}
           path: backend/target/release/procchi
 
       - name: Upload (Windows)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: matrix.platform == 'windows-latest'
         with:
           name: procchi-${{ matrix.platform }}-${{ matrix.feature == '--no-default-features' && 'minimal' || 'all-features' }}
