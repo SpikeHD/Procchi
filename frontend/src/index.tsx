@@ -33,8 +33,16 @@ export function App() {
     ;(async () => {
       // Get version and alert it
       const res = await fetch('/api/version_info')
-      const data = await res.text()
-      window.dispatchEvent(ProcchiAlert(data))
+      const data = await res.json()
+      window.dispatchEvent(ProcchiAlert(`${data.name} v${data.version} by ${data.author}`))
+
+      // Also check for updates
+      const updateRes = await fetch('https://api.github.com/repos/SpikeHD/procchi/releases/latest')
+      const updateData = await updateRes.json()
+
+      if (updateData.tag_name !== `v${data.version}`) {
+        window.dispatchEvent(ProcchiAlert(`A new version of Procchi (${updateData.tag_name}) is available!`))
+      }
     })()
   }, [])
 

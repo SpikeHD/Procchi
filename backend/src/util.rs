@@ -28,7 +28,7 @@ pub fn _relative_to_seconds(rel: impl AsRef<str>) -> u64 {
 
 pub fn version_string() -> String {
   format!(
-    "Procchi v{}.{}.{}, by {}",
+    r#"{{ "name": "Procchi", "version": "{}.{}.{}", "author": "{}" }}"#,
     env!("CARGO_PKG_VERSION_MAJOR"),
     env!("CARGO_PKG_VERSION_MINOR"),
     env!("CARGO_PKG_VERSION_PATCH"),
