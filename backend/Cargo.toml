@@ -8,6 +8,7 @@ authors = ["SpikeHD"]
 
 [profiles.release]
 strip = "debuginfo"
+lto = true
 
 # Linker options
 [target.x86_64-unknown-linux-gnu]
