@@ -37,5 +37,5 @@ pub fn version_string() -> String {
 }
 
 fn no_quotes(s: &str) -> String {
-  s.replace("\"", "").replace("'", "")
+  s.replace(['\"', '\''], "")
 }

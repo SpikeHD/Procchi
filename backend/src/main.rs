@@ -245,7 +245,8 @@ fn recursive_serve(app: &mut tide::Server<State>, path: Option<&Path>) {
 }
 
 fn serve_info(app: &mut tide::Server<State>) {
-  app.at("/api/version_info")
+  app
+    .at("/api/version_info")
     .get(|_req: tide::Request<State>| async move {
       let mut res = tide::Response::new(200);
       res.set_body(util::version_string());

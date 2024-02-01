@@ -6,7 +6,7 @@
     "start": "cd ./frontend && npm run build && cd ../backend && cargo run -- -u test -k test",
     "build:bun": "cd ./frontend && bun run build && cd ../backend && cargo build --release",
     "build": "cd ./frontend && npm run build && cd ../backend && cargo build --release",
-    "clippy:fix": "cargo clippy --manifest-path ./backend/Cargo.toml --all --fix",
+    "clippy:fix": "cargo clippy --manifest-path ./backend/Cargo.toml --all --allow-dirty --fix",
     "fmt:fix": "cargo fmt --manifest-path ./backend/Cargo.toml --all",
     "lint": "cd ./frontend && eslint ./src/**/*.tsx",
     "lint:fix": "cd ./frontend && eslint --fix ./src/**/*.tsx"
