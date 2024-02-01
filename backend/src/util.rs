@@ -25,3 +25,13 @@ pub fn _relative_to_seconds(rel: impl AsRef<str>) -> u64 {
     _ => panic!("Invalid unit {}", unit),
   }
 }
+
+pub fn version_string() -> String {
+  format!(
+    "Procchi v{}.{}.{}, by {}",
+    env!("CARGO_PKG_VERSION_MAJOR"),
+    env!("CARGO_PKG_VERSION_MINOR"),
+    env!("CARGO_PKG_VERSION_PATCH"),
+    env!("CARGO_PKG_AUTHORS")
+  )
+}

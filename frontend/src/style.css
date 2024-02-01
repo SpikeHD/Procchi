@@ -8,7 +8,7 @@ html {
   --color-hover: #e0e4e1;
   --graph-color: #54545477;
 
-  --color-alert: rgba(146, 14, 43, 0.6);
+  --color-alert: rgba(194, 28, 64, 0.7);
 }
 
 html.theme-dark {
@@ -21,7 +21,7 @@ html.theme-dark {
   --color-hover: #474747;
   --graph-color: #cdcdcdb1;
   
-  --color-alert: rgba(146, 14, 43, 0.6);
+  --color-alert: rgba(194, 28, 64, 0.7);
 }
 
 body {

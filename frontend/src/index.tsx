@@ -10,6 +10,7 @@ import './style.css'
 import ProcchiIcon from './assets/procchi_icon.png'
 import { ThemeSwitch } from './components/ThemeSwitch.js'
 import { AlertList } from './components/alert/AlertList.js'
+import { ProcchiAlert } from './components/alert/Alert.js'
 
 export function App() {
   const [alerts, setAlerts] = useState<string[]>([])
@@ -17,14 +18,25 @@ export function App() {
   useEffect(() => {
     // Watch for alert events
     window.addEventListener('procchi-alert', (e: CustomEvent) => {
-      setAlerts([...alerts, e.detail])
+      setAlerts((alerts) => [
+        // If there are more than 6 alerts, start removing the oldest ones
+        ...alerts.slice(alerts.length > 5 ? 1 : 0),
+        e.detail
+      ])
 
-      // Remove the alert after 5 seconds
+      // Remove the alert after 4 seconds
       setTimeout(() => {
         setAlerts((alerts) => alerts.filter(a => a !== e.detail))
-      }, 5000)
+      }, 6000)
     })
-  })
+
+    ;(async () => {
+      // Get version and alert it
+      const res = await fetch('/api/version_info')
+      const data = await res.text()
+      window.dispatchEvent(ProcchiAlert(data))
+    })()
+  }, [])
 
   return (
     <div id="root">

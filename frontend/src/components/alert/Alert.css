@@ -1,6 +1,7 @@
 .alert {
   max-width: 30vw;
-  height: 60px;
+  height: 40px;
+
 
   display: flex;
   flex-direction: column;
@@ -8,12 +9,12 @@
   align-items: center;
 
   color: #fbfefb;
+  font-weight: bold;
+  font-size: 14px;
   background-color: var(--color-alert);
 
   padding: 10px;
   margin: 10px;
-
-  font-weight: bold;
 
   border-radius: 8px;
   

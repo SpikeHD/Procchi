@@ -188,6 +188,9 @@ fn main() {
     args.port
   ));
 
+  // Serve info endpoint
+  serve_info(&mut app);
+
   task::block_on(async {
     if args.https {
       app
@@ -239,4 +242,14 @@ fn recursive_serve(app: &mut tide::Server<State>, path: Option<&Path>) {
   for dir in dir.dirs() {
     recursive_serve(app, Some(dir.path()));
   }
+}
+
+fn serve_info(app: &mut tide::Server<State>) {
+  app.at("/api/version_info")
+    .get(|_req: tide::Request<State>| async move {
+      let mut res = tide::Response::new(200);
+      res.set_body(util::version_string());
+      res.set_content_type("text/plain");
+      Ok(res)
+    });
 }
