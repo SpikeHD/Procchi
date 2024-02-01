@@ -7,6 +7,14 @@
     "build:bun": "cd ./frontend && bun run build && cd ../backend && cargo build --release",
     "build": "cd ./frontend && npm run build && cd ../backend && cargo build --release",
     "clippy:fix": "cargo clippy --manifest-path ./backend/Cargo.toml --all --fix",
-    "fmt:fix": "cargo fmt --manifest-path ./backend/Cargo.toml --all"
+    "fmt:fix": "cargo fmt --manifest-path ./backend/Cargo.toml --all",
+    "lint": "cd ./frontend && eslint ./src/**/*.tsx",
+    "lint:fix": "cd ./frontend && eslint --fix ./src/**/*.tsx"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.50.0",
+    "eslint-config-preact": "^1.3.0"
   }
 }
