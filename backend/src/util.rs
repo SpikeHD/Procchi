@@ -29,9 +29,13 @@ pub fn _relative_to_seconds(rel: impl AsRef<str>) -> u64 {
 pub fn version_string() -> String {
   format!(
     r#"{{ "name": "Procchi", "version": "{}.{}.{}", "author": "{}" }}"#,
-    env!("CARGO_PKG_VERSION_MAJOR"),
-    env!("CARGO_PKG_VERSION_MINOR"),
-    env!("CARGO_PKG_VERSION_PATCH"),
-    env!("CARGO_PKG_AUTHORS")
+    no_quotes(env!("CARGO_PKG_VERSION_MAJOR")),
+    no_quotes(env!("CARGO_PKG_VERSION_MINOR")),
+    no_quotes(env!("CARGO_PKG_VERSION_PATCH")),
+    no_quotes(env!("CARGO_PKG_AUTHORS"))
   )
+}
+
+fn no_quotes(s: &str) -> String {
+  s.replace("\"", "").replace("'", "")
 }
