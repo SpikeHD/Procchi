@@ -1,0 +1,28 @@
+.alert {
+  max-width: 30vw;
+  height: 60px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #fbfefb;
+  background-color: var(--color-alert);
+
+  padding: 10px;
+  margin: 10px;
+
+  font-weight: bold;
+
+  border-radius: 8px;
+  
+  pointer-events: none;
+
+  backdrop-filter: blur(8px);
+}
+
+.alert p {
+  margin: 0;
+  padding: 0;
+}
