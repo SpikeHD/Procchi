@@ -13,7 +13,9 @@ interface McData {
 }
 
 export function Minecraft() {
-  const [data, setData] = useState({} as McData)
+  const [data, setData] = useState({
+    
+  } as McData)
 
   useEffect(() => {
     (async () => {
