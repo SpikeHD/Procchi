@@ -1,3 +1,5 @@
+use std::ptr::addr_of;
+
 use crate::State;
 use serde::Serialize;
 
@@ -59,7 +61,7 @@ async fn plugins_route(_req: tide::Request<State>) -> Result<tide::Response, tid
   let mut res = tide::Response::new(200);
 
   unsafe {
-    res.set_body(serde_json::to_vec(&PLUGINS).unwrap());
+    res.set_body(serde_json::to_vec(&PLUGINS.clone()).unwrap());
   }
 
   res.set_content_type("application/json");

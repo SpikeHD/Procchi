@@ -14,7 +14,11 @@ interface McData {
 
 export function Minecraft() {
   const [data, setData] = useState({
-    
+    description: '',
+    players: 0,
+    version: '',
+    latency: 0,
+    address: ''
   } as McData)
 
   useEffect(() => {
