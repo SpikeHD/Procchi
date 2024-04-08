@@ -1,5 +1,3 @@
-use std::ptr::addr_of;
-
 use crate::State;
 use serde::Serialize;
 
