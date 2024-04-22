@@ -22,10 +22,12 @@ export function Minecraft() {
   } as McData)
 
   useEffect(() => {
-    (async () => {
+    const intv = setInterval(async () => {
       const data = await fetch('/api/minecraft').then((res) => res.json())
       setData(data)
-    })()
+    }, 5000)
+
+    return () => clearInterval(intv)
   }, [])
 
   return (
